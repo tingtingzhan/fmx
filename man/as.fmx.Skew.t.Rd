@@ -48,3 +48,4 @@ stopifnot(all.equal.numeric(AIC(l3a), m3$aic), all.equal.numeric(BIC(l3a), m3$bi
 }
 
 }
+\keyword{internal}

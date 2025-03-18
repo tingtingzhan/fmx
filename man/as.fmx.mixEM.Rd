@@ -33,3 +33,4 @@ hist.default(faithful$waiting, freq = FALSE)
 curve(dfmx(x, dist = wait), xlim = range(faithful$waiting), add = TRUE)
 
 }
+\keyword{internal}

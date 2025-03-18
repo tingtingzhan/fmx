@@ -39,6 +39,7 @@
 #' (c2 = fmx_constraint(d2))
 #' user_constraint('g2', distname = 'GH', K = 2L) # equivalent
 #' 
+#' @keywords internal
 #' @name fmx_constraint
 #' @export
 fmx_constraint <- function(dist, distname = dist@distname, K = dim(dist@pars)[1L], pars = dist@pars) {

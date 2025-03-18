@@ -67,3 +67,4 @@ pmlogis_last(qmlogis_last(c(1, 0, 0, 0)))
 \seealso{
 \link[stats]{plogis} \link[stats]{qlogis}
 }
+\keyword{internal}

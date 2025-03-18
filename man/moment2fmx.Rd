@@ -41,3 +41,4 @@ x = rfmx(n = 1e3L, dist = d1)
 range(dfmx(x, dist = d1) - dfmx(x, dist = d2))
 
 }
+\keyword{internal}

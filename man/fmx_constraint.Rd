@@ -48,3 +48,4 @@ user_constraint(c('g2', 'h1'), distname = 'GH', K = 2L) # equivalent
 user_constraint('g2', distname = 'GH', K = 2L) # equivalent
 
 }
+\keyword{internal}

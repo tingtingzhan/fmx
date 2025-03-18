@@ -51,6 +51,7 @@ as.fmx.fmx <- function(x, ...) x
 #' hist.default(log10ATV, freq = FALSE)
 #' curve(dfmx(x, dist = fln2), xlim = range(log10ATV), add = TRUE)
 #' 
+#' @keywords internal
 #' @method as.fmx fitdist
 #' @export as.fmx.fitdist
 #' @export
@@ -93,6 +94,7 @@ as.fmx.fitdist <- function(x, ...) {
 #' hist.default(faithful$waiting, freq = FALSE)
 #' curve(dfmx(x, dist = wait), xlim = range(faithful$waiting), add = TRUE)
 #' 
+#' @keywords internal
 #' @method as.fmx mixEM
 #' @export as.fmx.mixEM
 #' @export
@@ -159,6 +161,7 @@ as.fmx.mixEM <- function(x, data = x[['x']], ...) {
 #' hist(x, freq = FALSE)
 #' curve(dfmx(x, dist = m1a), xlim = range(x), add = TRUE)
 #' 
+#' @keywords internal
 #' @method as.fmx Skew.normal
 #' @export as.fmx.Skew.normal
 #' @export
@@ -224,6 +227,7 @@ as.fmx.Skew.normal <- function(x, data, ...) {
 #' hist(x, freq = FALSE)
 #' curve(dfmx(x, dist = m2a), xlim = range(x), add = TRUE)
 #' 
+#' @keywords internal
 #' @method as.fmx Normal
 #' @export as.fmx.Normal
 #' @export
@@ -296,6 +300,7 @@ as.fmx.Normal <- function(x, data, ...) {
 #' stopifnot(all.equal.numeric(AIC(l3a), m3$aic), all.equal.numeric(BIC(l3a), m3$bic))
 #' }
 #' 
+#' @keywords internal
 #' @method as.fmx Skew.t
 #' @export as.fmx.Skew.t
 #' @export
@@ -365,7 +370,7 @@ as.fmx.Skew.t <- function(x, data, ...) {
 #' mix.hist(y = x, model = m4)
 #' # as.fmx(m4, data = x) # not ready yet!!
 #' 
-#' 
+#' @keywords internal
 #' @method as.fmx t
 #' @export
 as.fmx.t <- function(x, data, ...) {

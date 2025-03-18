@@ -30,3 +30,4 @@ hist.default(log10ATV, freq = FALSE)
 curve(dfmx(x, dist = fln2), xlim = range(log10ATV), add = TRUE)
 
 }
+\keyword{internal}

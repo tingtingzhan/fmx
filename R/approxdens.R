@@ -1,11 +1,4 @@
 
-######################################
-## Modify in tzhInternal package!!
-######################################
-
-
-
-
 #' @title Empirical Density Function
 #' 
 #' @description ..
@@ -27,6 +20,7 @@
 #' f = approxdens(x)
 #' f(x[1:3])
 #' 
+#' @keywords internal
 #' @importFrom stats density.default approxfun
 #' @export
 approxdens <- function(x, ...) {

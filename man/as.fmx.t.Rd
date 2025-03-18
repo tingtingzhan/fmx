@@ -40,5 +40,5 @@ class(m4 <- smsn.mix(x, nu = 3, g = 3, family = 't', calc.im = FALSE))
 mix.hist(y = x, model = m4)
 # as.fmx(m4, data = x) # not ready yet!!
 
-
 }
+\keyword{internal}

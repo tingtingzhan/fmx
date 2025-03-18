@@ -25,3 +25,4 @@ an S4 \linkS4class{fmx} object.
 moment_fmx(d2)
 
 }
+\keyword{internal}

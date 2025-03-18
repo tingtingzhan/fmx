@@ -18,6 +18,7 @@
 #' (d2 = fmx('GH', A = c(1,6), B = 2, g = c(0,.3), h = c(.2,0), w = c(1,2)))
 #' moment_fmx(d2)
 #' 
+#' @keywords internal
 #' @importFrom param2moment moment_GH moment_norm moment_sn moment_st
 #' @export
 moment_fmx <- function(object) {
@@ -63,6 +64,7 @@ moment_fmx <- function(object) {
 #' x = rfmx(n = 1e3L, dist = d1)
 #' range(dfmx(x, dist = d1) - dfmx(x, dist = d2))
 #' 
+#' @keywords internal
 #' @importFrom param2moment moment2param
 #' @export
 moment2fmx <- function(distname, w, ...) {

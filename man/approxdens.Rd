@@ -28,3 +28,4 @@ f = approxdens(x)
 f(x[1:3])
 
 }
+\keyword{internal}

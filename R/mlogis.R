@@ -1,11 +1,4 @@
 
-
-######################################
-## Modify in tzhInternal package!!
-######################################
-
-
-
 #' @title Multinomial Probabilities & Logits
 #' 
 #' @description 
@@ -61,6 +54,7 @@
 #' pmlogis_last(qmlogis_last(c(1, 0, 0, 0)))
 #' 
 #' @name mlogis
+#' @keywords internal
 #' @export
 qmlogis_first <- function(p) {
   lp <- log(p)

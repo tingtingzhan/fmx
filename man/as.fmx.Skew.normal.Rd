@@ -43,3 +43,4 @@ hist(x, freq = FALSE)
 curve(dfmx(x, dist = m1a), xlim = range(x), add = TRUE)
 
 }
+\keyword{internal}
