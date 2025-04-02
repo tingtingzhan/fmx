@@ -18,16 +18,4 @@ Function \code{\link[=as.fmx.fitdist]{as.fmx.fitdist()}} returns an \linkS4class
 To convert \link[fitdistrplus]{fitdist} objects (from package \CRANpkg{fitdistrplus})
 to \linkS4class{fmx} class.
 }
-\examples{
-library(fitdistrplus)
-# ?fitdist
-data(endosulfan, package = 'fitdistrplus')
-ATV <- subset(endosulfan, group == 'NonArthroInvert')$ATV
-log10ATV <- log10(ATV)
-fln <- fitdist(log10ATV, distr = 'norm')
-(fln2 <- as.fmx(fln))
-hist.default(log10ATV, freq = FALSE)
-curve(dfmx(x, dist = fln2), xlim = range(log10ATV), add = TRUE)
-
-}
 \keyword{internal}
