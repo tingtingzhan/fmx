@@ -58,51 +58,7 @@
 #' Function \link[stats]{qnorm} returns an unnamed \link[base]{vector} of quantiles, 
 #' although \link[stats]{quantile} returns a named \link[base]{vector} of quantiles.
 #' 
-#' 
-#' @examples 
-#' library(ggplot2)
-#' 
-#' (e1 = fmx('norm', mean = c(0,3), sd = c(1,1.3), w = c(1, 1)))
-#' curve(dfmx(x, dist = e1), xlim = c(-3,7))
-#' ggplot() + geom_function(fun = dfmx, args = list(dist = e1)) + xlim(-3,7)
-#' ggplot() + geom_function(fun = pfmx, args = list(dist = e1)) + xlim(-3,7)
-#' hist(rfmx(n = 1e3L, dist = e1), main = '1000 obs from e1')
-#' 
-#' x = (-3):7
-#' round(dfmx(x, dist = e1), digits = 3L)
-#' round(p1 <- pfmx(x, dist = e1), digits = 3L)
-#' stopifnot(all.equal.numeric(qfmx(p1, dist = e1), x, tol = 1e-4))
-#' 
-#' (e2 = fmx('GH', A = c(0,3), g = c(.2, .3), h = c(.2, .1), w = c(2, 3)))
-#' ggplot() + geom_function(fun = dfmx, args = list(dist = e2)) + xlim(-3,7)
-#' 
-#' round(dfmx(x, dist = e2), digits = 3L)
-#' round(p2 <- pfmx(x, dist = e2), digits = 3L)
-#' stopifnot(all.equal.numeric(qfmx(p2, dist = e2), x, tol = 1e-4))
-#' 
-#' (e3 = fmx('GH', g = .2, h = .01)) # one-component Tukey
-#' ggplot() + geom_function(fun = dfmx, args = list(dist = e3)) + xlim(-3,5)
-#' set.seed(124); r1 = rfmx(1e3L, dist = e3); 
-#' set.seed(124); r2 = TukeyGH77::rGH(n = 1e3L, g = .2, h = .01)
-#' stopifnot(identical(r1, r2)) # but ?rfmx has much cleaner code
-#' round(dfmx(x, dist = e3), digits = 3L)
-#' round(p3 <- pfmx(x, dist = e3), digits = 3L)
-#' stopifnot(all.equal.numeric(qfmx(p3, dist = e3), x, tol = 1e-4))
-#' 
-#' 
-#' a1 = fmx('GH', A = c(7,9), B = c(.8, 1.2), g = c(.3, 0), h = c(0, .1), w = c(1, 1))
-#' a2 = fmx('GH', A = c(6,9), B = c(.8, 1.2), g = c(-.3, 0), h = c(.2, .1), w = c(4, 6))
-#' library(ggplot2)
-#' (p = ggplot() + 
-#'  geom_function(fun = pfmx, args = list(dist = a1), mapping = aes(color = 'g2=h1=0')) + 
-#'  geom_function(fun = pfmx, args = list(dist = a2), mapping = aes(color = 'g2=0')) + 
-#'  xlim(3,15) + 
-#'  scale_y_continuous(labels = scales::percent) +
-#'  labs(y = NULL, color = 'models') +
-#'  coord_flip())
-#' p + theme(legend.position = 'none')
-#' 
-#' 
+#' @keywords internal
 #' @name dfmx
 #' @import stats
 #' @importFrom sn dsn psn qsn rsn dst pst qst rst
@@ -136,11 +92,11 @@ dfmx <- function(x, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
                   # array(dsn(x = xm, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], log = TRUE), dim = dim(xm), dimnames = dimnames(xm))
                   # this is wrong!!
                   # have to go the stupid way!!
-                  do.call(rbind, args = lapply(seq_len(K), FUN = function(i) dsn(x = x, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], log = TRUE)))
+                  do.call(rbind, args = lapply(seq_len(K), FUN = \(i) dsn(x = x, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], log = TRUE)))
                 }, 
                 st = {
                   # ?sn::dst gives error on vector `nu`
-                  do.call(rbind, args = lapply(seq_len(K), FUN = function(i) dst(x = x, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L], log = TRUE)))
+                  do.call(rbind, args = lapply(seq_len(K), FUN = \(i) dst(x = x, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L], log = TRUE)))
                 },
                 stop('I do not have `d', distname, '` function'))
   if (any(is.infinite(lds))) {
@@ -215,11 +171,11 @@ pfmx <- function(q, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     # ?sn::psn does not respect `attr(x, 'dim')`, but do handle \link[base]{matrix} `x` correctly
     # packageDate('sn') 2023-04-04: *sometimes* get error by using matrix `x`, dont know why
     # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]), dim = dim(qM_naive))
-    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = function(i) psn(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L])))
+    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) psn(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L])))
     if (!lower.tail) 1 - tmp else tmp
   }, st = {
     # ?sn::pst does not respect `attr(x, 'dim')`, and do not handle \link[base]{matrix} `x` correctly!!
-    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = function(i) pst(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L])))
+    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) pst(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L])))
     # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]), dim = dim(qM_naive))
     # range(tmp - tmp2) # not the same!!
     if (!lower.tail) 1 - tmp else tmp
@@ -257,7 +213,7 @@ pfmx <- function(q, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
 #' @export
 qfmx_interval <- function(dist, p = c(1e-6, 1-1e-6), distname = dist@distname, K = dim(pars)[1L], pars = dist@pars, w = dist@w, ...) {
   qfun <- paste0('q', distname)
-  y_ls <- lapply(seq_len(K), FUN = function(i) {# single component
+  y_ls <- lapply(seq_len(K), FUN = \(i) {# single component
     iw <- w[i]
     ip <- p
     ip[1L] <- min(p[1L]/iw, .05)
@@ -339,7 +295,7 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     function(q) {
       # ?sn::psn does not respect `attr(q, 'dim')`, but do handle \link[base]{matrix} `x` correctly
       #ps <- array(psn(tcrossprod(ones, q), xi = xi, omega = omega, alpha = alpha), dim = c(K, length(q)))
-      ps <- do.call(rbind, args = lapply(seq_len(K), FUN = function(i) psn(q, xi = xi[i], omega = omega[i], alpha = alpha[i])))
+      ps <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) psn(q, xi = xi[i], omega = omega[i], alpha = alpha[i])))
       if (!lower.tail) ps <- 1 - ps
       c(t_w %*% ps)
     }
@@ -350,7 +306,7 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     nu <- pars[,4L]
     function(q) {
       # ?sn::psn does not respect `attr(q, 'dim')`, and do not handle \link[base]{matrix} `x` correctly !!
-      ps <- do.call(rbind, args = lapply(seq_len(K), FUN = function(i) pst(q, xi = xi[i], omega = omega[i], alpha = alpha[i], nu = nu[i])))
+      ps <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) pst(q, xi = xi[i], omega = omega[i], alpha = alpha[i], nu = nu[i])))
       if (!lower.tail) ps <- 1 - ps
       c(t_w %*% ps)
     }
@@ -378,21 +334,6 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
 
 
 #' @rdname dfmx
-#' @examples
-#' # to use [rfmx] without \pkg{fmx}
-#' (d = fmx(distname = 'GH', A = c(-1,1), B = c(.9,1.1), g = c(.3,-.2), h = c(.1,.05), w = c(2,3)))
-#' d@@pars
-#' set.seed(14123); x = rfmx(n = 1e3L, dist = d)
-#' set.seed(14123); x_raw = rfmx(n = 1e3L,
-#'  distname = 'GH', K = 2L,
-#'  pars = rbind(
-#'   c(A = -1, B = .9, g = .3, h = .1),
-#'   c(A = 1, B = 1.1, g = -.2, h = .05)
-#'  ), 
-#'  w = c(.4, .6)
-#' )
-#' stopifnot(identical(x, x_raw))
-#' 
 #' @importFrom sn rsn rst
 #' @importFrom TukeyGH77 rGH
 #' @export
@@ -404,7 +345,7 @@ rfmx <- function(n, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
   } else sample.int(n = K, size = n, replace = TRUE, prob = w)
   d2 <- cbind(pars, n = tabulate(id, nbins = K)) # 'matrix'
   r_fn <- paste0('r', distname)
-  xs <- lapply(seq_len(K), FUN = function(i) {
+  xs <- lapply(seq_len(K), FUN = \(i) {
     do.call(what = r_fn, args = as.list.default(d2[i, ]))
   })
   out <- unlist(xs, use.names = FALSE)

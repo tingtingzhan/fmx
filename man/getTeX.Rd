@@ -20,15 +20,4 @@ primarily intended for end-users in plots.
 \description{
 Create TeX label of (parameter constraint(s)) of \linkS4class{fmx} object
 }
-\examples{
-(d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-getTeX(d0)
-
-(d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-getTeX(d1)
-
-(d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-getTeX(d2)
-
-}
 \keyword{internal}

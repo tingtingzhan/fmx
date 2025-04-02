@@ -25,20 +25,4 @@ to \linkS4class{fmx} class.
 \note{
 \link[mixsmsn]{smsn.mix} does not offer a parameter to keep the input data, as of 2021-10-06.
 }
-\examples{
-
-library(mixsmsn)
-# ?smsn.mix
-arg1 = c(mu = 5, sigma2 = 9, lambda = 5, nu = 5)
-arg2 = c(mu = 20, sigma2 = 16, lambda = -3, nu = 5)
-arg3 = c(mu = 35, sigma2 = 9, lambda = -6, nu = 5)
-set.seed(120); x = rmix(n = 1e3L, p=c(.5, .2, .3), family = 'Skew.t', 
-  arg = list(unname(arg1), unname(arg2), unname(arg3)))
-
-# t
-class(m4 <- smsn.mix(x, nu = 3, g = 3, family = 't', calc.im = FALSE))
-mix.hist(y = x, model = m4)
-# as.fmx(m4, data = x) # not ready yet!!
-
-}
 \keyword{internal}

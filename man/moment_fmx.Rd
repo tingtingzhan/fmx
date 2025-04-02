@@ -20,9 +20,4 @@ Function \code{\link[=moment_fmx]{moment_fmx()}} calculates the \link[param2mome
 and distribution characteristics of each mixture component of
 an S4 \linkS4class{fmx} object.
 }
-\examples{
-(d2 = fmx('GH', A = c(1,6), B = 2, g = c(0,.3), h = c(.2,0), w = c(1,2)))
-moment_fmx(d2)
-
-}
 \keyword{internal}

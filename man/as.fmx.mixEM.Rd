@@ -26,11 +26,4 @@ Currently only the returned value of
 \note{
 \link[mixtools]{plot.mixEM} not plot \link[mixtools]{gammamixEM} returns, as of 2022-09-19.
 }
-\examples{
-library(mixtools)
-(wait = as.fmx(normalmixEM(faithful$waiting, k = 2)))
-hist.default(faithful$waiting, freq = FALSE)
-curve(dfmx(x, dist = wait), xlim = range(faithful$waiting), add = TRUE)
-
-}
 \keyword{internal}

@@ -15,11 +15,10 @@
 #' @returns 
 #' Function [approxdens()] returns a \link[base]{function}.
 #' 
-#' @examples 
-#' x = rnorm(1e3L)
-#' f = approxdens(x)
-#' f(x[1:3])
-#' 
+#' @examples
+#' set.seed(135); x = rnorm(1e3L)
+#' (f = approxdens(x))
+#' x[1:3] |> f()
 #' @keywords internal
 #' @importFrom stats density.default approxfun
 #' @export

@@ -24,10 +24,4 @@ Taking subset of components in \linkS4class{fmx} object
 Using definitions as S3 method dispatch \code{`[.fmx`} won't work
 for \linkS4class{fmx} objects.
 }
-\examples{
-
-(d = fmx('norm', mean = c(1, 4, 7), w = c(1, 1, 1)))
-d[1:2]
-
-}
 \keyword{internal}

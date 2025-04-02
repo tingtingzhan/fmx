@@ -40,7 +40,6 @@
 #' q0 = .8300964
 #' (p1 = pmlogis_last(q0))
 #' (q1 = qmlogis_last(p1))
-#' 
 #' # various exceptions
 #' pmlogis_first(qmlogis_first(c(1, 0)))
 #' pmlogis_first(qmlogis_first(c(0, 1)))
@@ -52,9 +51,9 @@
 #' pmlogis_last(qmlogis_last(c(0, 0, 1)))
 #' pmlogis_last(qmlogis_last(c(0, 1, 0, 0)))
 #' pmlogis_last(qmlogis_last(c(1, 0, 0, 0)))
-#' 
-#' @name mlogis
+#'    
 #' @keywords internal
+#' @name mlogis
 #' @export
 qmlogis_first <- function(p) {
   lp <- log(p)

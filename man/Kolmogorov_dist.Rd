@@ -38,15 +38,12 @@ to speed up the calculation.}
 }
 }
 \examples{
-# from ?stats::ks.test
-x1 = rnorm(50)
-ks.test(x1+2, y = pgamma, shape = 3, rate = 2)
-Kolmogorov_dist(x1+2, null = pgamma, shape = 3, rate = 2) # exactly the same
+set.seed(24); x1 = rnorm(n = 50L, mean = 2)
+x1 |> stats::ks.test(y = pgamma, shape = 3, rate = 2)
+x1 |> Kolmogorov_dist(null = pgamma, shape = 3, rate = 2) # exactly the same
 
-# discrete distribution
-x2 <- rnbinom(n = 1e2L, size = 500, prob = .4)
-suppressWarnings(ks.test(x2, y = pnbinom, size = 500, prob = .4)) # warning on ties
-Kolmogorov_dist(x2, null = pnbinom, size = 500, prob = .4) # wont be the same
-
+set.seed(76); x2 = rnbinom(n = 1e2L, size = 500, prob = .4)
+x2 |> stats::ks.test(y = pnbinom, size = 500, prob = .4) |> suppressWarnings() # warning on ties
+x2 |> Kolmogorov_dist(null = pnbinom, size = 500, prob = .4) # not exactly the same
 }
 \keyword{internal}

@@ -23,9 +23,8 @@ Function \code{\link[=approxdens]{approxdens()}} returns a \link[base]{function}
 another 'layer' of \link[stats]{approxfun}
 }
 \examples{
-x = rnorm(1e3L)
-f = approxdens(x)
-f(x[1:3])
-
+set.seed(135); x = rnorm(1e3L)
+(f = approxdens(x))
+x[1:3] |> f()
 }
 \keyword{internal}

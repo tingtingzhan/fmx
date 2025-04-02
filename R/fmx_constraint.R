@@ -26,19 +26,6 @@
 #' (only applicable to Tukey \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained, 
 #' based on the input \linkS4class{fmx} object `dist`.
 #' 
-#' @examples 
-#' (d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-#' (c0 = fmx_constraint(d0))
-#' user_constraint(character(), distname = 'GH', K = 2L) # equivalent
-#' 
-#' (d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-#' (c1 = fmx_constraint(d1))
-#' user_constraint(c('g2', 'h1'), distname = 'GH', K = 2L) # equivalent
-#' 
-#' (d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-#' (c2 = fmx_constraint(d2))
-#' user_constraint('g2', distname = 'GH', K = 2L) # equivalent
-#' 
 #' @keywords internal
 #' @name fmx_constraint
 #' @export
@@ -86,19 +73,6 @@ fmx_constraint <- function(dist, distname = dist@distname, K = dim(dist@pars)[1L
 #' based on the type of distribution `distname`, number of components `K`
 #' and a user-specified string (e.g., `c('g2', 'h1')`).
 #' 
-#' @examples 
-#' (d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-#' (c0 = fmx_constraint(d0))
-#' user_constraint(distname = 'GH', K = 2L, x = character()) # equivalent
-#' 
-#' (d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-#' (c1 = fmx_constraint(d1))
-#' user_constraint(distname = 'GH', K = 2L, x = c('g2', 'h1')) # equivalent
-#' 
-#' (d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-#' (c2 = fmx_constraint(d2))
-#' user_constraint(distname = 'GH', K = 2L, x = 'g2') # equivalent
-#' 
 #' @keywords internal
 #' @export
 user_constraint <- function(x, distname, K) {
@@ -140,16 +114,6 @@ user_constraint <- function(x, distname, K) {
 #' (of TeX expression) of the constraint, 
 #' primarily intended for end-users in plots.
 #' 
-#' 
-#' @examples 
-#' (d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-#' getTeX(d0)
-#' 
-#' (d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-#' getTeX(d1)
-#' 
-#' (d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-#' getTeX(d2)
 #' 
 #' @keywords internal
 #' @export

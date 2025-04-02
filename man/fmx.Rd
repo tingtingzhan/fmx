@@ -22,14 +22,3 @@ Function \code{\link[=fmx]{fmx()}} returns an \linkS4class{fmx} object.
 \description{
 To create \linkS4class{fmx} object for finite mixture distribution.
 }
-\examples{
-
-(e1 = fmx('norm', mean = c(0,3), sd = c(1,1.3), w = c(1, 1)))
-isS4(e1) # TRUE
-slotNames(e1)
-
-(e2 = fmx('GH', A = c(0,3), g = c(.2, .3), h = c(.2, .1), w = c(2, 3)))
-
-(e3 = fmx('GH', A = 0, g = .2, h = .2)) # one-component Tukey
-
-}

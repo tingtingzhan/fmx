@@ -90,11 +90,6 @@ print.fmx <- function(x, ...) {
 # as well as other estimation related slots (e.g., `@@init`) 
 #' will be lost.
 #' 
-#' @examples 
-#' 
-#' (d = fmx('norm', mean = c(1, 4, 7), w = c(1, 1, 1)))
-#' d[1:2]
-#' 
 #' @keywords internal
 #' @export
 setMethod(`[`, signature(x = 'fmx', i = 'ANY'), definition = function(x, i) {

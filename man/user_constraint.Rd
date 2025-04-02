@@ -26,18 +26,4 @@ and a user-specified string (e.g., \code{c('g2', 'h1')}).
 \description{
 Formalize user-specified constraint of \linkS4class{fmx} object
 }
-\examples{
-(d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-(c0 = fmx_constraint(d0))
-user_constraint(distname = 'GH', K = 2L, x = character()) # equivalent
-
-(d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-(c1 = fmx_constraint(d1))
-user_constraint(distname = 'GH', K = 2L, x = c('g2', 'h1')) # equivalent
-
-(d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-(c2 = fmx_constraint(d2))
-user_constraint(distname = 'GH', K = 2L, x = 'g2') # equivalent
-
-}
 \keyword{internal}

@@ -34,18 +34,4 @@ Determine the parameter constraint(s) of a finite mixture distribution \linkS4cl
 either by the value of parameters of such mixture distribution,
 or by a user-specified string.
 }
-\examples{
-(d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
-(c0 = fmx_constraint(d0))
-user_constraint(character(), distname = 'GH', K = 2L) # equivalent
-
-(d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
-(c1 = fmx_constraint(d1))
-user_constraint(c('g2', 'h1'), distname = 'GH', K = 2L) # equivalent
-
-(d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
-(c2 = fmx_constraint(d2))
-user_constraint('g2', distname = 'GH', K = 2L) # equivalent
-
-}
 \keyword{internal}
