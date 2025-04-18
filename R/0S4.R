@@ -15,7 +15,7 @@
 #' Each row corresponds to one component. Each column includes the same parameters of all components.
 #' The order of rows corresponds to the (non-strictly) increasing order of the component location parameters.
 #' The columns match the formal arguments of the corresponding distribution, 
-#' e.g., `'mean'` and `'sd'` for \link[stats:dnorm]{normal} mixture, 
+#' e.g., `'mean'` and `'sd'` for \link[stats]{Normal} mixture, 
 #' or `'A'`, `'B'`, `'g'` and `'h'` for Tukey \eqn{g}-&-\eqn{h} mixture.
 #' 
 #' @slot w \link[base]{numeric} \link[base]{vector} of mixing proportions that must sum to 1
@@ -28,7 +28,11 @@
 #' 
 #' @slot vcov (optional) variance-covariance \link[base]{matrix} of the mixture distribution (i.e., constrained) estimates
 #' 
-#' @slot Kolmogorov,CramerVonMises,KullbackLeibler (optional) \link[base]{numeric} scalars
+#' @slot dist.ks (optional) \link[base]{numeric} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}
+#' 
+#' @slot dist.cvm (optional) \link[base]{numeric} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}
+#' 
+#' @slot dist.kl (optional) \link[base]{numeric} scalars, Kullback-Leibler distance
 #' 
 #' @export
 setClass(Class = 'fmx', slots = c(
@@ -41,9 +45,9 @@ setClass(Class = 'fmx', slots = c(
   vcov_internal = 'matrix',
   vcov = 'matrix',
   ### all below: diagnostics
-  Kolmogorov = 'numeric',
-  CramerVonMises = 'numeric',
-  KullbackLeibler = 'numeric'
+  dist.ks = 'numeric',
+  dist.cvm = 'numeric',
+  dist.kl = 'numeric'
 ), prototype = prototype(
   w = 1 # for 1-component
 ), validity = function(object) {
@@ -62,14 +66,47 @@ setClass(Class = 'fmx', slots = c(
     if (length(w) != K) stop('slot `w` should be length-K')
     if (!isTRUE(all.equal.numeric(sum(w), 1))) stop('slot `w` must sum up to be `1`') # may not be ?base::identical
   }
-  
-  # all below: optional
-  if (length(object@data)) {
-    if (anyNA(object@data)) stop('Observations in \'fmx\' must be free of NA_real_')
-  }
 }) 
 
 
+#' @importFrom stats ks.test
+#' @importFrom goftest cvm.test
+# @seealso `dgof::cvm.test`
+#' @importFrom LaplacesDemon KLD
+setMethod(f = initialize, signature = 'fmx', definition = function(.Object, ...) {
+  
+  x <- callNextMethod(.Object, ...)
+  
+  data <- x@data
+  if (!length(data)) return(x)
+  
+  if (anyNA(data)) stop('Observations in \'fmx\' must be free of NA_real_')
+
+  # overwrite existing
+  x@dist.ks <- ks.test(x = data, y = pfmx, dist = x)$statistic |> unname() |> suppressWarnings()
+  
+  x@dist.cvm <- cvm.test(
+    x = data, 
+    #null = pfmx, dist = x, # error, do not know why..
+    null = function(q, dist = x) {
+      pfmx(q, dist = dist) |>
+        pmax.int(.Machine$double.eps) |>
+        pmin.int(1 - .Machine$double.eps)
+    }, 
+    nullname = ''
+  )$statistic |>
+    unname() |> 
+    suppressWarnings()
+  
+  kl.px <- dfmx(data, dist = x, log = FALSE)
+  kl.py <- if (x@distname %in% c(distType('continuous'), distType('nonNegContinuous'))) {
+    approxdens(data)(data)
+  } else (tabulate(data, nbins = max(data)) / length(data))[data]
+  x@dist.kl <- KLD(px = kl.px, py = kl.py)$sum.KLD.py.px
+  
+  return(x)
+  
+})
 
 
 

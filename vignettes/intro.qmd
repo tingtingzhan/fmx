@@ -161,7 +161,12 @@ ggplot() +
 #| fig-height: 3
 #| fig-width: 4
 par(mar = c(4, 5, 2, 0))
-e1 |> rfmx(n = 1e3L) |> hist(main = '1000 obs from e1')
+r1 = e1 |> rfmx(n = 1e3L) 
+r1 |> hist(main = '1000 obs from e1')
+```
+
+```{r}
+new(Class = 'fmx', e1, data = r1)
 ```
 
 ## Extract Subset

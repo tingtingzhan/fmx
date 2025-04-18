@@ -21,7 +21,7 @@ all distribution parameters in the mixture.
 Each row corresponds to one component. Each column includes the same parameters of all components.
 The order of rows corresponds to the (non-strictly) increasing order of the component location parameters.
 The columns match the formal arguments of the corresponding distribution,
-e.g., \code{'mean'} and \code{'sd'} for \link[stats:dnorm]{normal} mixture,
+e.g., \code{'mean'} and \code{'sd'} for \link[stats]{Normal} mixture,
 or \code{'A'}, \code{'B'}, \code{'g'} and \code{'h'} for Tukey \eqn{g}-&-\eqn{h} mixture.}
 
 \item{\code{w}}{\link[base]{numeric} \link[base]{vector} of mixing proportions that must sum to 1}
@@ -34,6 +34,10 @@ or \code{'A'}, \code{'B'}, \code{'g'} and \code{'h'} for Tukey \eqn{g}-&-\eqn{h}
 
 \item{\code{vcov}}{(optional) variance-covariance \link[base]{matrix} of the mixture distribution (i.e., constrained) estimates}
 
-\item{\code{Kolmogorov,CramerVonMises,KullbackLeibler}}{(optional) \link[base]{numeric} scalars}
+\item{\code{dist.ks}}{(optional) \link[base]{numeric} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}}
+
+\item{\code{dist.cvm}}{(optional) \link[base]{numeric} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}}
+
+\item{\code{dist.kl}}{(optional) \link[base]{numeric} scalars, Kullback-Leibler distance}
 }}
 

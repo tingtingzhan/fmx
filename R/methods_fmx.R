@@ -39,6 +39,32 @@ print.fmx <- function(x, ...) {
   }
   
   print.default(obj, quote = FALSE)
+  
+  if (length(x@data)) {
+    
+    cat('\n')
+    
+    x@data |> 
+      length() |>
+      sprintf(fmt = 'Number of Observations: %d\n') |> 
+      cat()
+    
+    cat('\n')
+    
+    x@dist.ks |>
+      sprintf(fmt = 'Kolmogorov-Smirnov Distance: %.5f\n') |> 
+      cat()
+    
+    x@dist.cvm |>
+      sprintf(fmt = 'Cramer-Von Mises Distance: %.5f\n') |> 
+      cat()
+    
+    x@dist.kl |>
+      sprintf(fmt = 'Kullback-Leibler divergence: %.5f\n') |> 
+      cat()
+
+  }
+  
   return(invisible(x))
 }
 
