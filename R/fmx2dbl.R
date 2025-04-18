@@ -40,7 +40,7 @@ fmx2dbl <- function(x, distname = x@distname, pars = x@pars, K = dim(pars)[1L], 
   
   # no longer used in compute intensive algorithms
   
-  w_val <- qmlogis_first(w) # \code{K == 1L} will return \code{numeric(0)}
+  w_val <- qmlogis(w) # \code{K == 1L} will return \code{numeric(0)}
   if (!all(is.finite(w_val))) stop('NA or Inf in proportion indicated degenerated mixture (one or more component has 0% mixture proportion)')
   w_nm <- if (K == 1L) character() else paste0('logit', 2:K)
   
@@ -90,7 +90,7 @@ fmx2dbl <- function(x, distname = x@distname, pars = x@pars, K = dim(pars)[1L], 
 dbl2fmx <- function(x, K, distname, ...) {
   nx <- length(x)
   n_dist <- nx - (K - 1L) # K == 1L or not
-  w <- if (K == 1L) 1 else unname(pmlogis_first(x[(n_dist + 1L):nx]))
+  w <- if (K == 1L) 1 else unname(pmlogis(x[(n_dist + 1L):nx]))
   pm <- array(x[seq_len(n_dist)], dim = c(K, n_dist/K)) # not compute intensive..
   pm[,id] <- exp(pm[, (id <- dist_logtrans(distname)), drop = FALSE])
   if (K > 1L) pm[,1L] <- cumsum(c(pm[1L,1L], exp(pm[2:K,1L])))

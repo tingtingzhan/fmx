@@ -2,68 +2,50 @@
 % Please edit documentation in R/mlogis.R
 \name{mlogis}
 \alias{mlogis}
-\alias{qmlogis_first}
-\alias{qmlogis_last}
-\alias{pmlogis_first}
-\alias{pmlogis_last}
+\alias{qmlogis}
+\alias{pmlogis}
 \title{Multinomial Probabilities & Logits}
 \usage{
-qmlogis_first(p)
+qmlogis(p)
 
-qmlogis_last(p)
-
-pmlogis_first(q)
-
-pmlogis_last(q)
+pmlogis(q)
 }
 \arguments{
-\item{p}{\link[base]{numeric} \link[base]{vector}, multinomial probabilities, adding up to 1}
+\item{p}{\link[base]{double} \link[base]{vector}, multinomial probabilities}
 
-\item{q}{\link[base]{numeric} \link[base]{vector}, multinomial logits}
+\item{q}{\link[base]{double} \link[base]{vector}, multinomial logits}
 }
 \value{
-Functions \link{pmlogis_first} and \link{pmlogis_last} return a \link[base]{vector} of multinomial probabilities \eqn{p}.
+Function \code{\link[=pmlogis]{pmlogis()}} returns a \link[base]{double} \link[base]{vector} of multinomial probabilities \eqn{p}.
 
-Functions \link{qmlogis_first} and \link{qmlogis_last} return a \link[base]{vector} of multinomial logits \eqn{q}.
+Function \code{\link[=qmlogis]{qmlogis()}} returns a \link[base]{double} \link[base]{vector} of multinomial logits \eqn{q}.
 }
 \description{
-Performs transformation between \link[base]{vector}s of multinomial probabilities and multinomial logits.
-
-This transformation is a generalization of \link[stats]{plogis} which converts scalar logit into probability
-and \link[stats]{qlogis} which converts probability into scalar logit.
+Transformation between the \link[base]{vector}s of multinomial probabilities and logits.
 }
 \details{
-Functions \link{pmlogis_first} and \link{pmlogis_last} take a length \eqn{k-1} \link[base]{numeric} \link[base]{vector} of
+Function \code{\link[=pmlogis]{pmlogis()}} takes a length \eqn{k-1} \link[base]{double} \link[base]{vector} of
 multinomial logits \eqn{q} and convert them into length \eqn{k} multinomial probabilities \eqn{p},
-regarding the first or last category as reference, respectively.
+regarding the \emph{first} category as reference.
 
-Functions \link{qmlogis_first} and \link{qmlogis_last} take a length \eqn{k} \link[base]{numeric} \link[base]{vector} of
+Function \code{\link[=qmlogis]{qmlogis()}} takes a length \eqn{k} \link[base]{double} \link[base]{vector} of
 multinomial probabilities \eqn{p} and convert them into length \eqn{k-1} multinomial logits \eqn{q},
-regarding the first or last category as reference, respectively.
+regarding the \emph{first} category as reference.
+}
+\note{
+This transformation is a generalization of functions \link[stats]{plogis} (i.e., logit to probability)
+and \link[stats]{qlogis} (i.e., probability to logit).
 }
 \examples{
-(a = qmlogis_last(c(2,5,3)))
-(b = qmlogis_first(c(2,5,3)))
-pmlogis_last(a)
-pmlogis_first(b)
+(b = qmlogis(c(2,5,3)))
+pmlogis(b)
 
-q0 = .8300964
-(p1 = pmlogis_last(q0))
-(q1 = qmlogis_last(p1))
 # various exceptions
-pmlogis_first(qmlogis_first(c(1, 0)))
-pmlogis_first(qmlogis_first(c(0, 1)))
-pmlogis_first(qmlogis_first(c(0, 0, 1)))
-pmlogis_first(qmlogis_first(c(0, 1, 0, 0)))
-pmlogis_first(qmlogis_first(c(1, 0, 0, 0)))
-pmlogis_last(qmlogis_last(c(1, 0)))
-pmlogis_last(qmlogis_last(c(0, 1)))
-pmlogis_last(qmlogis_last(c(0, 0, 1)))
-pmlogis_last(qmlogis_last(c(0, 1, 0, 0)))
-pmlogis_last(qmlogis_last(c(1, 0, 0, 0)))
+pmlogis(qmlogis(c(1, 0)))
+pmlogis(qmlogis(c(0, 1)))
+pmlogis(qmlogis(c(0, 0, 1)))
+pmlogis(qmlogis(c(0, 1, 0, 0)))
+pmlogis(qmlogis(c(1, 0, 0, 0)))
    
-}
-\seealso{
-\link[stats]{plogis} \link[stats]{qlogis}
 }
 \keyword{internal}
