@@ -310,3 +310,31 @@ logLik.fmx <- function(object, data = object@data, ...) {
 
 
 
+
+#' @title Number of Observations in \linkS4class{fmx} Object
+#' 
+#' @description 
+#' ..
+#' 
+#' @param object \linkS4class{fmx} object
+#' 
+#' @param ... place holder for S3 naming convention
+#' 
+#' @details 
+#' 
+#' Function [nobs.fmx()] returns the sample size of
+#' an \linkS4class{fmx} object 
+#' 
+#' @returns 
+#' 
+#' Function [nobs.fmx()] returns an \link[base]{integer} scalar.
+#' 
+#' @importFrom stats nobs
+#' @export nobs.fmx
+#' @export
+nobs.fmx <- function(object, ...) length(object@data)
+
+
+
+
+
