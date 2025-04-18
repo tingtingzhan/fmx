@@ -37,12 +37,21 @@
 #' @keywords internal
 #' @export
 fmx2dbl <- function(x, distname = x@distname, pars = x@pars, K = dim(pars)[1L], w = x@w, ...) { 
+  
   # no longer used in compute intensive algorithms
+  
   w_val <- qmlogis_first(w) # \code{K == 1L} will return \code{numeric(0)}
   if (!all(is.finite(w_val))) stop('NA or Inf in proportion indicated degenerated mixture (one or more component has 0% mixture proportion)')
   w_nm <- if (K == 1L) character() else paste0('logit', 2:K)
+  
   pars[, id] <- log(pars[, (id <- dist_logtrans(distname))])
-  argnm <- switch(distname, norm = c('mean', 'sdlog'), GH = c('A', 'Blog', 'g', 'hlog'), stop('write more'))
+  
+  argnm <- switch(distname, norm = {
+    c('mean', 'sdlog')
+  }, GH = {
+    c('A', 'Blog', 'g', 'hlog')
+  }, stop('write more'))
+  
   if (K > 1L) {
     # when some log(d) is negative and has too great absolute value, 
     # exp(log(d)) is numerically 0, and `pars` will not be strictly increasing
@@ -50,6 +59,7 @@ fmx2dbl <- function(x, distname = x@distname, pars = x@pars, K = dim(pars)[1L], 
     pars[2:K, 1L] <- log(pars[2:K, 1L] - pars[1:(K-1L), 1L])
     locnm <- c(paste0(argnm[1L], 1L), paste0('log\u0394', seq_len(K)[-1L]))
   } else locnm <- paste0(argnm[1L], seq_len(K))
+  
   out <- c(pars, w_val)
   names(out) <- c(locnm, paste0(rep(argnm[-1L], each = K), seq_len(K)), w_nm)
   return(out)

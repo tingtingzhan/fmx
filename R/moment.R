@@ -7,15 +7,16 @@
 #' @param object an \linkS4class{fmx} object
 #' 
 #' @details
-#' Function [moment_fmx()] calculates the \link[param2moment:moment-class]{moment}s 
+#' Function [moment_fmx()] calculates the \linkS4class{moment}s 
 #' and distribution characteristics of each mixture component of 
 #' an S4 \linkS4class{fmx} object.
 #' 
 #' @returns 
-#' Function [moment_fmx()] returns a \link[param2moment:moment-class]{moment} object.
+#' Function [moment_fmx()] returns a \linkS4class{moment} object.
 #' 
 #' @keywords internal
 #' @importFrom param2moment moment_GH moment_norm moment_sn moment_st
+#' @importClassesFrom param2moment moment
 #' @export
 moment_fmx <- function(object) {
   pars <- object@pars 
@@ -45,8 +46,9 @@ moment_fmx <- function(object) {
 #' @importFrom param2moment moment2param
 #' @export
 moment2fmx <- function(distname, w, ...) {
-  tmp <- moment2param(distname = distname, ...)
-  pars <- do.call(rbind, args = tmp)
+  pars <- distname |> 
+    moment2param(...) |>
+    do.call(what = rbind)
   w1 <- cbind(w, pars)[, 1L] # length recycle
   w <- w1/sum(w1)
   new(Class = 'fmx', distname = distname, pars = pars, w = w)
