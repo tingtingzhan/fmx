@@ -1,0 +1,303 @@
+---
+title: "Finite Mixture Distribution, an S4 framework"
+author: Tingting Zhan
+format: 
+  html:
+    page-layout: full
+    html-math-method: katex
+toc: true
+toc-location: left
+toc-depth: 4
+toc-title: ''
+editor: visual
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+This vignette of package **`fmx`** ([CRAN](https://CRAN.R-project.org/package=fmx), [Github](https://github.com/tingtingzhan/fmx)) documents ..
+
+## Prerequisite
+
+New features are first implemented on [Github](https://github.com/tingtingzhan/fmx).
+
+```{r}
+#| warning: false
+#| eval: false
+remotes::install_github('tingtingzhan/fmx')
+```
+
+And eventually make their way to [`CRAN`](https://CRAN.R-project.org/package=fmx).
+
+```{r}
+#| warning: false
+#| eval: false
+utils::install.packages('fmx')
+```
+
+## Note to Users
+
+Examples in this vignette require that the `search` path has
+
+```{r}
+library(fmx)
+library(ggplot2)
+library(scales)
+library(mixtools)
+library(mixsmsn)
+```
+
+```{r}
+#| echo: false
+library(knitr) # for tables in this vignette
+theme_set(theme_bw())
+graphics::par(mar = c(0, 0, 0, 0))
+#options(mc.cores = 1L) # for CRAN submission
+```
+
+## Terms and Abbreviations
+
+```{r echo = FALSE, results = 'asis'}
+c(
+  '', 'Forward pipe operator', '`?base::pipeOp` introduced in `R` 4.1.0', 
+  '`CRAN`, `R`', 'The Comprehensive R Archive Network', '<https://cran.r-project.org>',
+  '`curve`', 'Function plots', '`graphics::curve`',
+  '`fitdist`', 'Mixture of distribution from package **`fitdistrplus`**', '`fitdistrplus::fitdist`', 
+  '`GH`', 'Tukey\'s $g$-&-$h$ distribution', '`Tukey77::dGH`',
+  '`norm`', 'Normal distribution', '`stats::dnorm`',
+  '`object.size`', 'Memory allocation', '`utils::object.size`',
+  '`S3`, `generic`, `methods`', '`S3` object oriented system',  '`base::UseMethod`; `utils::methods`; `utils::getS3method`; <https://adv-r.hadley.nz/s3.html>',
+  '`S4`, `generic`, `methods`', '`S4` object oriented system',  '`base::isS4`; `methods::setClass`; `methods::getMethod`; <https://adv-r.hadley.nz/s4.html>',
+  '`search`', 'Search path', '`base::search`'
+) |>
+  matrix(nrow = 3L, dimnames = list(c('Term / Abbreviation', 'Description', 'Reference'), NULL)) |>
+  t.default() |>
+  as.data.frame.matrix() |> 
+  kable() 
+```
+
+# `S4` Class `'fmx'`
+
+## Definition
+
+The `S4` class stores the parameters of a mixture of distribution. Currently the `norm`al distribution and Tukey's `GH` distribution is supported.
+
+Example below shows a mixture of two normal distributions $N(0,1)$ and $N(3,1.3)$ with $(50\%, 50\%)$ mixing probability (i.e., the mixing probability $w$ is normalize to so that the summation of $w$ is 1).
+
+```{r}
+(e1 = fmx('norm', mean = c(0,3), sd = c(1,1.3), w = c(1, 1)))
+class(e1)
+isS4(e1)
+```
+
+Example below shows a mixture of two Tukey's $g$-and-$h$ distributions $(A,B,g,h)=(0,1,.2,.2)$ and $(3,1,.3,.1)$ (i.e., by default the location parameter $A=0$ and the scale parameter $B=1$) with $(20\%,30\%)$ mixing probability.
+
+```{r}
+(e2 = fmx('GH', A = c(0,3), g = c(.2, .3), h = c(.2, .1), w = c(2, 3)))
+```
+
+The `fmx` framework also accepts a single-component distribution.
+
+```{r}
+(e3 = fmx('GH', g = .2, h = .2))
+```
+
+## Density
+
+Function `dfmx()` ...
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+par(mar = c(4, 5, 1, 0))
+curve(dfmx(x, dist = e1), xlim = c(-3,7), n = 501L, ylab = 'Density')
+```
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+ggplot() + 
+  geom_function(fun = dfmx, args = list(dist = e1), xlim = c(-3,7), n = 501L)
+```
+
+## Probability
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+par(mar = c(4, 5, 1, 0))
+curve(pfmx(x, dist = e1), xlim = c(-3,7), n = 501L, ylab = 'Probability')
+```
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+ggplot() + 
+  geom_function(fun = pfmx, args = list(dist = e1), xlim = c(-3,7), n = 501L) + 
+  scale_y_continuous(labels = percent)
+```
+
+## Quantile
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+par(mar = c(4, 5, 1, 0))
+curve(qfmx(x, dist = e1), xlim = c(0,1), n = 501L, ylab = 'Quantile')
+```
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+ggplot() + 
+  geom_function(fun = qfmx, args = list(dist = e1), n = 501L, xlim = c(0,1)) +
+  scale_x_continuous(labels = percent)
+```
+
+## Simulation
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4
+par(mar = c(4, 5, 2, 0))
+e1 |> rfmx(n = 1e3L) |> hist(main = '1000 obs from e1')
+```
+
+## Extract Subset
+
+```{r}
+(d = fmx('norm', mean = c(1, 4, 7), w = c(1, 1, 1)))
+d[1:2]
+```
+
+# Multiple `'fmx'` Objects
+
+```{r}
+#| fig-height: 3
+#| fig-width: 5
+ggplot() + 
+ geom_function(fun = qfmx, args = list(dist=e1), mapping = aes(color='Normal'), n = 501L) + 
+ geom_function(fun = qfmx, args = list(dist=e2), mapping = aes(color='Tukey gh'), n = 501L) + 
+ scale_x_continuous(labels = percent, limits = c(.01, .99)) +
+ labs(x = NULL, y = 'Quantile', color = 'Mixture\nModels')
+```
+
+# Tukey's $g$-&-$h$ Mixture
+
+Consider three Tukey's $g$-&-$h$ mixture distributions.
+
+```{r}
+(d0 = fmx('GH', A = c(1,4), g = c(.2,.1), h = c(.05,.1), w = c(1,1)))
+(d1 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(0,.1), w = c(1,1)))
+(d2 = fmx('GH', A = c(1,4), g = c(.2,0), h = c(.15,.1), w = c(1,1)))
+```
+
+## $gh$-Constraints
+
+```{r}
+d0 |> fmx_constraint()
+
+d1 |> fmx_constraint()
+
+d2 |> fmx_constraint()
+```
+
+```{r}
+getTeX(d0)
+
+getTeX(d1)
+
+getTeX(d2)
+```
+
+# Moment per Component
+
+## From `'fmx'` to moments
+
+Function `moment_fmx()` ...
+
+```{r}
+d2 |> moment_fmx()
+```
+
+## From moments to `'fmx'`
+
+Function `moment2fmx()` ...
+
+```{r}
+m = c(-1.5, 1.5)
+s = c(.9, 1.1)
+sk = c(.2, -.3)
+kt = c(.5, .75)
+w = c(2, 3)
+```
+
+```{r}
+(m1 = moment2fmx(distname = 'GH', w = w, mean = m, sd = s, skewness = sk, kurtosis = kt))
+moment_fmx(m1)
+(m2 = moment2fmx(distname = 'st', w = w, mean = m, sd = s, skewness = sk, kurtosis = kt))
+moment_fmx(m2)
+```
+
+```{r}
+#| fig-height: 3
+#| fig-width: 5
+ggplot() + 
+ geom_function(aes(color = 'GH'), fun = dfmx, args = list(dist=m1), n = 1001L) + 
+ geom_function(aes(color = 'st'), fun = dfmx, args = list(dist=m2), n = 1001L) +
+ xlim(-5, 6)
+```
+
+Two curves looks really close, but actually not identical.
+
+```{r}
+x = seq.int(from = -5L, to = 6L, length.out = 1001L)
+all.equal.numeric(dfmx(x, dist = m1), dfmx(x, dist = m2))
+```
+
+# Convert to `'fmx'` Class
+
+## Convert package **`mixtools`** returns to `'fmx'`
+
+```{r}
+#| message: false
+m = faithful$waiting |> normalmixEM(k = 2)
+class(m)
+```
+
+```{r}
+(wait = m |> as.fmx())
+```
+
+## Convert package **`mixsmsn`** returns to `'fmx'`
+
+```{r}
+arg1 = c(mu = 5, sigma2 = 9, lambda = 5, nu = 5)
+arg2 = c(mu = 20, sigma2 = 16, lambda = -3, nu = 5)
+arg3 = c(mu = 35, sigma2 = 9, lambda = -6, nu = 5)
+set.seed(120); x = rmix(n = 1e3L, p=c(.5, .2, .3), family = 'Skew.t', 
+  arg = list(unname(arg1), unname(arg2), unname(arg3)))
+```
+
+```{r}
+m1 = smsn.mix(x, nu = 3, g = 3, family = 'Skew.normal', calc.im = FALSE)
+m1 |> as.fmx(data = x)
+```
+
+```{r}
+m2 = smsn.mix(x, nu = 3, g = 3, family = 'Normal', calc.im = FALSE)
+m2 |> as.fmx(data = x)
+```
+
+```{r}
+m3 = smsn.mix(x, nu = 3, g = 3, family = 'Skew.t', calc.im = FALSE)
+m3 |> as.fmx(data = x)
+```
+
+```{r}
+m4 = smsn.mix(x, nu = 3, g = 3, family = 't', calc.im = FALSE)
+# as.fmx(m4, data = x) # not ready yet!!
+```

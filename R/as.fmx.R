@@ -27,33 +27,6 @@ as.fmx <- function(x, ...) UseMethod('as.fmx')
 as.fmx.fmx <- function(x, ...) x
 
 
-#' @title Convert \link[fitdistrplus]{fitdist} Objects to \linkS4class{fmx} Class
-#' 
-#' @description 
-#' To convert \link[fitdistrplus]{fitdist} objects (from package \CRANpkg{fitdistrplus}) 
-#' to \linkS4class{fmx} class.
-#' 
-#' @param x \link[fitdistrplus]{fitdist} object
-#' 
-#' @param ... ..
-#' 
-#' @returns 
-#' Function [as.fmx.fitdist()] returns an \linkS4class{fmx} object.
-#' 
-#' @keywords internal
-#' @method as.fmx fitdist
-#' @export as.fmx.fitdist
-#' @export
-as.fmx.fitdist <- function(x, ...) {
-  if (!length(data <- x[['data']])) stop('Rerun ?fitdistrplus::fitdist with `keepdata = TRUE')
-  new(Class = 'fmx', 
-      pars = matrix(x[['estimate']], nrow = 1L), 
-      distname = x[['distname']],
-      data = data, 
-      vcov = if (length(x[['vcov']])) x[['vcov']] else array(dim = c(0, 0)))
-}
-
-
 
 
 #' @title Convert `mixEM` Objects to \linkS4class{fmx} Class
