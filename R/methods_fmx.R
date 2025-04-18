@@ -1,25 +1,6 @@
 
 
 
-#' @title Show \linkS4class{fmx} Object
-#' 
-#' @description
-#' Print the parameters of an \linkS4class{fmx} object and plot its density curves.
-#' 
-#' @param object an \linkS4class{fmx} object
-#' 
-#' @returns 
-#' The \link[methods]{show} method for \linkS4class{fmx} object 
-#' does not have a returned value.
-#' 
-#' @keywords internal
-#' @export
-setMethod(f = show, signature = signature(object = 'fmx'), definition = function(object) {
-  print.fmx(object)
-})
-
-
-
 
 #' @title S3 \link[base]{print} of \linkS4class{fmx} Object
 #' 
@@ -60,48 +41,6 @@ print.fmx <- function(x, ...) {
   print.default(obj, quote = FALSE)
   return(invisible(x))
 }
-
-
-
-
-
-
-
-#' @title Subset of Components in \linkS4class{fmx} Object
-#' 
-#' @description 
-#' 
-#' Taking subset of components in \linkS4class{fmx} object
-#' 
-#' @param x \linkS4class{fmx} object
-#' 
-#' @param i \link[base]{integer} or \link[base]{logical} \link[base]{vector}, 
-#' the row indices of *components* to be chosen, see \link[base]{[}
-#' 
-#' @details 
-#' 
-#' Using definitions as S3 method dispatch \code{`[.fmx`} won't work 
-#' for \linkS4class{fmx} objects.
-#' 
-#' @returns 
-#' 
-#' An \linkS4class{fmx} object consisting of a subset of components.
-#' information about the observations (e.g. slots `@@data` and `@@data.name`),
-# as well as other estimation related slots (e.g., `@@init`) 
-#' will be lost.
-#' 
-#' @keywords internal
-#' @export
-setMethod(`[`, signature(x = 'fmx', i = 'ANY'), definition = function(x, i) {
-  if (length(x@data)) message('Subset the estimates and drop `@data` etc.')
-  pars <- x@pars[i, , drop = FALSE]
-  w <- x@w[i]
-  w <- unname(w / sum(w)) # adjust mixing proportions
-  o <- order(pars[, 1L])
-  new(Class = 'fmx', pars = pars[o, , drop = FALSE], w = w[o], distname = x@distname)
-})
-
-
 
 
 

@@ -19,7 +19,7 @@
 #' S3 generic function [as.fmx()] returns an \linkS4class{fmx} object.
 #' 
 #' @export
-as.fmx <- function(x, ...) UseMethod('as.fmx')
+as.fmx <- function(x, ...) UseMethod(generic = 'as.fmx')
 
 
 #' @export

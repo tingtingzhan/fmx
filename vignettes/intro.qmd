@@ -255,5 +255,3 @@ Two curves looks really close, but actually not identical.
 x = seq.int(from = -5L, to = 6L, length.out = 1001L)
 all.equal.numeric(dfmx(x, dist = m1), dfmx(x, dist = m2))
 ```
-
-
