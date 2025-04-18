@@ -37,15 +37,15 @@ This transformation is a generalization of functions \link[stats]{plogis} (i.e.,
 and \link[stats]{qlogis} (i.e., probability to logit).
 }
 \examples{
-(b = qmlogis(c(2,5,3)))
-pmlogis(b)
+c(2,5,3) |> qmlogis() |> pmlogis()
 
 # various exceptions
-pmlogis(qmlogis(c(1, 0)))
-pmlogis(qmlogis(c(0, 1)))
-pmlogis(qmlogis(c(0, 0, 1)))
-pmlogis(qmlogis(c(0, 1, 0, 0)))
-pmlogis(qmlogis(c(1, 0, 0, 0)))
+c(1, 0) |> qmlogis() |> pmlogis()
+c(0, 1) |> qmlogis() |> pmlogis()
+c(0, 0, 1) |> qmlogis() |> pmlogis()
+c(1, 0, 0, 0) |> qmlogis() |> pmlogis()
+c(0, 1, 0, 0) |> qmlogis() |> pmlogis()
+c(0, 0, 1, 0) |> qmlogis() |> pmlogis()
    
 }
 \keyword{internal}
