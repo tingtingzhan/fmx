@@ -46,8 +46,6 @@ Examples in this vignette require that the `search` path has
 library(fmx)
 library(ggplot2)
 library(scales)
-library(mixtools)
-library(mixsmsn)
 ```
 
 ```{r}
@@ -258,46 +256,4 @@ x = seq.int(from = -5L, to = 6L, length.out = 1001L)
 all.equal.numeric(dfmx(x, dist = m1), dfmx(x, dist = m2))
 ```
 
-# Convert to `'fmx'` Class
 
-## Convert package **`mixtools`** returns to `'fmx'`
-
-```{r}
-#| message: false
-m = faithful$waiting |> normalmixEM(k = 2)
-class(m)
-```
-
-```{r}
-(wait = m |> as.fmx())
-```
-
-## Convert package **`mixsmsn`** returns to `'fmx'`
-
-```{r}
-arg1 = c(mu = 5, sigma2 = 9, lambda = 5, nu = 5)
-arg2 = c(mu = 20, sigma2 = 16, lambda = -3, nu = 5)
-arg3 = c(mu = 35, sigma2 = 9, lambda = -6, nu = 5)
-set.seed(120); x = rmix(n = 1e3L, p=c(.5, .2, .3), family = 'Skew.t', 
-  arg = list(unname(arg1), unname(arg2), unname(arg3)))
-```
-
-```{r}
-m1 = smsn.mix(x, nu = 3, g = 3, family = 'Skew.normal', calc.im = FALSE)
-m1 |> as.fmx(data = x)
-```
-
-```{r}
-m2 = smsn.mix(x, nu = 3, g = 3, family = 'Normal', calc.im = FALSE)
-m2 |> as.fmx(data = x)
-```
-
-```{r}
-m3 = smsn.mix(x, nu = 3, g = 3, family = 'Skew.t', calc.im = FALSE)
-m3 |> as.fmx(data = x)
-```
-
-```{r}
-m4 = smsn.mix(x, nu = 3, g = 3, family = 't', calc.im = FALSE)
-# as.fmx(m4, data = x) # not ready yet!!
-```
