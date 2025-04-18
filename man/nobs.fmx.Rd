@@ -9,15 +9,16 @@
 \arguments{
 \item{object}{\linkS4class{fmx} object}
 
-\item{...}{place holder for S3 naming convention}
+\item{...}{additional parameters, currently of no use}
 }
 \value{
 Function \code{\link[=nobs.fmx]{nobs.fmx()}} returns an \link[base]{integer} scalar.
 }
 \description{
-..
+Number of observations in an \linkS4class{fmx} object.
 }
 \details{
-Function \code{\link[=nobs.fmx]{nobs.fmx()}} returns the sample size of
-an \linkS4class{fmx} object
+Function \code{\link[=nobs.fmx]{nobs.fmx()}} finds the sample size of \verb{@data} slot of
+an \linkS4class{fmx} object.
 }
+\keyword{internal}

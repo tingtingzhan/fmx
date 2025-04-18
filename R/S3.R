@@ -51,6 +51,11 @@ print.fmx <- function(x, ...) {
     
     cat('\n')
     
+    x@logLik |>
+      print()
+    
+    cat('\n')
+    
     x@dist.ks |>
       sprintf(fmt = 'Kolmogorov-Smirnov Distance: %.5f\n') |> 
       cat()
@@ -256,79 +261,41 @@ coef.fmx <- function(object, internal = FALSE, ...) {
 
 #' @title Log-Likelihood of \linkS4class{fmx} Object
 #' 
-#' @description ..
+#' @description 
+#' Log-likelihood of an \linkS4class{fmx} object.
 #' 
 #' @param object \linkS4class{fmx} object
 #' 
-#' @param data \link[base]{double} \link[base]{vector}, actual observations
-#' 
-#' @param ... place holder for S3 naming convention
-#' 
-#' @details 
-#' 
-#' Function [logLik.fmx()] returns a \link[stats]{logLik} object indicating the log-likelihood.
-#' An additional attribute `attr(,'logl')` indicates the point-wise log-likelihood, 
-#' to be use in Vuong's closeness test.
+#' @param ... additional parameters, currently of no use
 #' 
 #' @returns 
-#' 
-#' Function [logLik.fmx()] returns a \link[stats]{logLik} object with 
-#' an additional attribute `attr(,'logl')`.
+#' Function [logLik.fmx()] returns a \link[stats]{logLik} object.
 #' 
 #' @keywords internal
 #' @importFrom stats logLik
 #' @export logLik.fmx
 #' @export
-logLik.fmx <- function(object, data = object@data, ...) {
-  
-  # for developer to batch-calculate AIC/BIC quickly
-  #if (length(objF <- attr(object, which = 'objF', exact = TRUE))) {
-  #  if (inherits(objF[[1L]], what = 'logLik')) return(objF[[1L]])
-  #}
-  # ?step_fmx no longer uses logLik
-  
-  if (!length(data)) return(invisible())
-  
-  logd <- dfmx(x = data, dist = object, log = TRUE, ...)
-  if (!all(is.finite(logd))) {
-    #print(logd)
-    #object <<- object
-    #stop('malformed fit (?.dGH has been well debug-ged)')
-    # very likely to be `B = 0`
-    # do not stop.  settle with -Inf log-likelihood
-  }
-  ret <- sum(logd)
-  attr(ret, which = 'logl') <- logd # additional attributes; needed in Vuong's test
-  attr(ret, which = 'nobs') <- length(data)
-  attr(ret, which = 'df') <- npar.fmx(object)
-  class(ret) <- 'logLik'
-  return(ret)
-}
-
-
-
-
+logLik.fmx <- function(object, ...) object@logLik
 
 
 
 #' @title Number of Observations in \linkS4class{fmx} Object
 #' 
 #' @description 
-#' ..
+#' Number of observations in an \linkS4class{fmx} object.
 #' 
 #' @param object \linkS4class{fmx} object
 #' 
-#' @param ... place holder for S3 naming convention
+#' @param ... additional parameters, currently of no use
 #' 
 #' @details 
-#' 
-#' Function [nobs.fmx()] returns the sample size of
-#' an \linkS4class{fmx} object 
+#' Function [nobs.fmx()] finds the sample size of `@data` slot of
+#' an \linkS4class{fmx} object.
 #' 
 #' @returns 
-#' 
 #' Function [nobs.fmx()] returns an \link[base]{integer} scalar.
 #' 
+#' @keywords internal
 #' @importFrom stats nobs
 #' @export nobs.fmx
 #' @export

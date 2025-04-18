@@ -4,25 +4,17 @@
 \alias{logLik.fmx}
 \title{Log-Likelihood of \linkS4class{fmx} Object}
 \usage{
-\method{logLik}{fmx}(object, data = object@data, ...)
+\method{logLik}{fmx}(object, ...)
 }
 \arguments{
 \item{object}{\linkS4class{fmx} object}
 
-\item{data}{\link[base]{double} \link[base]{vector}, actual observations}
-
-\item{...}{place holder for S3 naming convention}
+\item{...}{additional parameters, currently of no use}
 }
 \value{
-Function \code{\link[=logLik.fmx]{logLik.fmx()}} returns a \link[stats]{logLik} object with
-an additional attribute \code{attr(,'logl')}.
+Function \code{\link[=logLik.fmx]{logLik.fmx()}} returns a \link[stats]{logLik} object.
 }
 \description{
-..
-}
-\details{
-Function \code{\link[=logLik.fmx]{logLik.fmx()}} returns a \link[stats]{logLik} object indicating the log-likelihood.
-An additional attribute \code{attr(,'logl')} indicates the point-wise log-likelihood,
-to be use in Vuong's closeness test.
+Log-likelihood of an \linkS4class{fmx} object.
 }
 \keyword{internal}

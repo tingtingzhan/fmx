@@ -32,11 +32,7 @@
 #' 
 #' A computational challenge in function [dfmx()] is when mixture density is very close to 0,
 #' which happens when the per-component log densities are negative with big absolute values.  
-#' In such case, we cannot compute the log mixture densities (i.e., `-Inf`), 
-#' for the log-likelihood using function [logLik.fmx()].
-#' Our solution is to replace these `-Inf` log mixture densities by 
-#' the weighted average (using the mixing proportions of `dist`) 
-#' of the per-component log densities.
+#' In such case, we cannot compute the log densities (i.e., `-Inf`).
 #' 
 #' Function [qfmx()] gives the quantile function, by numerically solving [pfmx].
 #' One major challenge when dealing with the finite mixture of Tukey \eqn{g}-&-\eqn{h} family distribution

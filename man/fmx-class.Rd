@@ -34,10 +34,14 @@ or \code{'A'}, \code{'B'}, \code{'g'} and \code{'h'} for Tukey \eqn{g}-&-\eqn{h}
 
 \item{\code{vcov}}{(optional) variance-covariance \link[base]{matrix} of the mixture distribution (i.e., constrained) estimates}
 
-\item{\code{dist.ks}}{(optional) \link[base]{numeric} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}}
+\item{\code{dist.ks}}{(optional) \link[base]{double} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}}
 
-\item{\code{dist.cvm}}{(optional) \link[base]{numeric} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}}
+\item{\code{dist.cvm}}{(optional) \link[base]{double} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}}
 
-\item{\code{dist.kl}}{(optional) \link[base]{numeric} scalars, Kullback-Leibler distance}
+\item{\code{dist.kl}}{(optional) \link[base]{double} scalars, Kullback-Leibler distance}
+
+\item{\code{logd}}{(optional) \link[base]{double} \link[base]{vector}, point-wise \link[base]{log}-density}
+
+\item{\code{logLik}}{(optional) \link[stats]{logLik} object, log-likelihood}
 }}
 

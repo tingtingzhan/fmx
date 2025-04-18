@@ -90,11 +90,7 @@ with normal or Tukey \eqn{g}-&-\eqn{h} components.
 \details{
 A computational challenge in function \code{\link[=dfmx]{dfmx()}} is when mixture density is very close to 0,
 which happens when the per-component log densities are negative with big absolute values.
-In such case, we cannot compute the log mixture densities (i.e., \code{-Inf}),
-for the log-likelihood using function \code{\link[=logLik.fmx]{logLik.fmx()}}.
-Our solution is to replace these \code{-Inf} log mixture densities by
-the weighted average (using the mixing proportions of \code{dist})
-of the per-component log densities.
+In such case, we cannot compute the log densities (i.e., \code{-Inf}).
 
 Function \code{\link[=qfmx]{qfmx()}} gives the quantile function, by numerically solving \link{pfmx}.
 One major challenge when dealing with the finite mixture of Tukey \eqn{g}-&-\eqn{h} family distribution

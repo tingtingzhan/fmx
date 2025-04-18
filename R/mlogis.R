@@ -55,7 +55,7 @@ qmlogis <- function(p) {
 #' @rdname mlogis
 #' @export
 pmlogis <- function(q) {
-  #if (anyNA(q)) stop('we *do* allow NA_real_ in logits')
+  # `q` may contain NaN !!
   eq <- exp(q)
   id <- is.infinite(eq)
   ret <- if (any(id)) {

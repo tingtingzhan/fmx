@@ -1,4 +1,7 @@
 
+setOldClass('logLik')
+
+
 #' @title \linkS4class{fmx} Class: Finite Mixture Parametrization
 #' 
 #' @description 
@@ -28,11 +31,15 @@
 #' 
 #' @slot vcov (optional) variance-covariance \link[base]{matrix} of the mixture distribution (i.e., constrained) estimates
 #' 
-#' @slot dist.ks (optional) \link[base]{numeric} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}
+#' @slot dist.ks (optional) \link[base]{double} scalar, Kolmogorov-Smirnov distance, via \link[stats]{ks.test}
 #' 
-#' @slot dist.cvm (optional) \link[base]{numeric} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}
+#' @slot dist.cvm (optional) \link[base]{double} scalars, Cramer von Mises distance, via \link[goftest]{cvm.test}
 #' 
-#' @slot dist.kl (optional) \link[base]{numeric} scalars, Kullback-Leibler distance
+#' @slot dist.kl (optional) \link[base]{double} scalars, Kullback-Leibler distance
+#' 
+#' @slot logd (optional) \link[base]{double} \link[base]{vector}, point-wise \link[base]{log}-density
+#' 
+#' @slot logLik (optional) \link[stats]{logLik} object, log-likelihood
 #' 
 #' @export
 setClass(Class = 'fmx', slots = c(
@@ -47,9 +54,12 @@ setClass(Class = 'fmx', slots = c(
   ### all below: diagnostics
   dist.ks = 'numeric',
   dist.cvm = 'numeric',
-  dist.kl = 'numeric'
+  dist.kl = 'numeric',
+  logd = 'numeric',
+  logLik = 'logLik'
 ), prototype = prototype(
-  w = 1 # for 1-component
+  w = 1, # for 1-component
+  logLik = structure(double(), class = 'logLik')
 ), validity = function(object) {
   pars <- object@pars
   if (anyNA(pars)) stop('do not allow NA in `fmx` distribution parameter')
@@ -104,6 +114,14 @@ setMethod(f = initialize, signature = 'fmx', definition = function(.Object, ...)
   } else (tabulate(data, nbins = max(data)) / length(data))[data]
   x@dist.kl <- KLD(px = kl.px, py = kl.py)$sum.KLD.py.px
   
+  x@logd <- dfmx(x = data, dist = x, log = TRUE)
+  #if (!all(is.finite(x@logd))) # do not stop.  settle with -Inf log-likelihood
+  ll <- sum(x@logd)
+  attr(ll, which = 'nobs') <- length(data)
+  attr(ll, which = 'df') <- npar.fmx(x)
+  class(ll) <- 'logLik'
+  x@logLik <- ll
+
   return(x)
   
 })
