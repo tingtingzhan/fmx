@@ -52,7 +52,7 @@ print.fmx <- function(x, ...) {
     cat('\n')
     
     x@logLik |>
-      print()
+      print() # ?stats:::print.logLik
     
     cat('\n')
     

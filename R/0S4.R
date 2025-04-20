@@ -1,6 +1,6 @@
 
 setOldClass('logLik')
-
+#setOldClass(Classes = 'logLik', prototype = structure(double(), class = 'logLik')) # does NOT work!!!
 
 #' @title \linkS4class{fmx} Class: Finite Mixture Parametrization
 #' 

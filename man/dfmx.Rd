@@ -70,7 +70,7 @@ If \code{TRUE} (default), probabilities are \eqn{Pr(X\le x)}, otherwise, \eqn{Pr
 
 \item{p}{\link[base]{numeric} \link[base]{vector}, probabilities.}
 
-\item{interval}{length two \link[base]{numeric} \link[base]{vector}, interval for root finding, see \link[TukeyGH77]{vuniroot2} and \link[rstpm2]{vuniroot}}
+\item{interval}{\link[base]{length}-2 \link[base]{numeric} \link[base]{vector}, interval for root finding, see \link[rstpm2]{vuniroot}}
 
 \item{n}{\link[base]{integer} scalar, number of observations.}
 }

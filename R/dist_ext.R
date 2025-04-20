@@ -69,7 +69,6 @@ distArgs <- function(distname) {
          cauchy = c('location', 'scale'), # ?stats:::dcauchy
          chisq = c('df', 'ncp'), # ?stats:::dchisq
          gamma = c('shape', 'scale'), # ?stats::dgamma
-         genpois1 = c('meanpar', 'dispind'), # ?VGAM::dgenpois1
          # read \link[mixtools]{gammamixEM} carefully: 'beta' is actually `scale`
          nbinom = c('size', 'prob'), # ?stats::dnbinom
          norm = c('mean', 'sd'), # ?stats::dnorm

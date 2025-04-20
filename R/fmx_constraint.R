@@ -138,7 +138,6 @@ getTeX <- function(dist, print_K = FALSE) {
                  norm = 'Normal',
                  sn = 'Skew Normal',
                  st = 'Skew $t$', 
-                 genpois1 = 'Generalized Poisson', # ?SIBERG::fitGP
                  nbinom = 'Negative Binomial', # SIBERG::fitNB
                  stop())
     if (print_K) sprintf('%d-comp. %s', K, nm) else nm
@@ -168,7 +167,7 @@ npar.fmx <- function(dist) {
   # ?stats::logLik
   # ?stats:::AIC.default
   # attr(, 'df') is the number of (estimated) parameters in the model.
-  # I write this function so that I do not have to do [dfmx] if not needed
+  # I write this function so that I do not have to do [dfmx()] if not needed
   dm <- dim(dist@pars)
   ret <- (dm[2L] + 1L) * dm[1L] - 1L - length(attr(fmx_constraint(dist), which = 'user', exact = TRUE))
   if (dist@distname == 'st') {

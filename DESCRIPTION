@@ -9,7 +9,7 @@ Description: A parametrization framework for finite mixture distribution
         skew-normal and skew-t distributions are well tested. The gamma,
         negative binomial distributions are being tested.
 License: GPL-2
-Imports: methods, goftest, LaplacesDemon, sn, VGAM, param2moment, TukeyGH77
+Imports: methods, goftest, LaplacesDemon, rstpm2, sn, param2moment, TukeyGH77
 Encoding: UTF-8
 Authors@R: c(person(given = "Tingting", family = "Zhan", role = c("aut",
         "cre"), email = c("tingtingzhan@gmail.com"), comment = c(ORCID =

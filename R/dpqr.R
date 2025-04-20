@@ -21,7 +21,7 @@
 #' @param lower.tail \link[base]{logical} scalar. 
 #' If `TRUE` (default), probabilities are \eqn{Pr(X\le x)}, otherwise, \eqn{Pr(X>x)}.
 #' 
-#' @param interval length two \link[base]{numeric} \link[base]{vector}, interval for root finding, see \link[TukeyGH77]{vuniroot2} and \link[rstpm2]{vuniroot}
+#' @param interval \link[base]{length}-2 \link[base]{numeric} \link[base]{vector}, interval for root finding, see \link[rstpm2]{vuniroot}
 #' 
 #' @param distname,K,pars,w auxiliary parameters, whose default values are determined by argument `dist`.
 #' The user-specified \link[base]{vector} of `w` does not need to sum up to 1; `w/sum(w)` will be used internally.
@@ -58,17 +58,16 @@
 #' @name dfmx
 #' @import stats
 #' @importFrom sn dsn psn qsn rsn dst pst qst rst
-#' @importFrom TukeyGH77 .dGH
-#' @importFrom VGAM dgenpois1 pgenpois1 qgenpois1 rgenpois1
+#' @importFrom TukeyGH77 dGH
 #' @export
 dfmx <- function(x, dist, distname = dist@distname, K = dim(pars)[1L], pars = dist@pars, w = dist@w, ..., log = FALSE) {
+  
   if (K == 1L) { # no mixture required!!
     switch(distname, 
            gamma = return(dgamma(x = x, shape = pars[,1L], scale = pars[,2L], log = log)),
-           genpois1 = return(dgenpois1(x = x, meanpar = pars[,1L], dispind = pars[,2L], log = log)),
            nbinom = return(dnbinom(x = x, size = pars[,1L], prob = pars[,2L], log = log)),
            norm = return(dnorm(x = x, mean = pars[,1L], sd = pars[,2L], log = log)), 
-           GH = return(.dGH(x = x, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], log = log, ...)),
+           GH = return(dGH(x = x, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], log = log, ...)),
            sn = return(dsn(x = x, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], log = log)),
            st = return(dst(x = x, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L], log = log)),
            stop('I do not have `d', distname, '` function'))
@@ -78,10 +77,15 @@ dfmx <- function(x, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
   
   lds <- switch(distname, # `lds` is per-component log-densities
                 gamma = dgamma(x = xm, shape = pars[,1L], scale = pars[,2L], log = TRUE),
-                genpois1 = dgenpois1(x = xm, meanpar = pars[,1L], dispind = pars[,2L], log = TRUE),
                 nbinom = dnbinom(x = xm, size = pars[,1L], prob = pars[,2L], log = TRUE),
                 norm = dnorm(x = xm, mean = pars[,1L], sd = pars[,2L], log = TRUE), 
-                GH = .dGH(x = xm, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], log = TRUE, ...),
+                GH = {
+                  # ?TukeyGH77::dGH only takes scalar A/B/g/h
+                  K |>
+                    seq_len() |>
+                    lapply(FUN = \(i) dGH(x = x, A = pars[i,1L], B = pars[i,2L], g = pars[i,3L], h = pars[i,4L], log = TRUE)) |>
+                    do.call(what = rbind)
+                },
                 sn = {
                   # ?sn::dsn does not respect `attr(x, 'dim')`
                   # to make things worse, ?sn::dsn does not even handle \link[base]{matrix} `x` correctly!!
@@ -126,73 +130,63 @@ dfmx <- function(x, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
 
 # not compute intensive
 #' @rdname dfmx
-#' @importFrom TukeyGH77 pGH GH2z
+#' @importFrom TukeyGH77 pGH gh2z
 #' @export
 pfmx <- function(q, dist, distname = dist@distname, K = dim(pars)[1L], pars = dist@pars, w = dist@w, ..., lower.tail = TRUE, log.p = FALSE) { # not compute-intensive
   if (K == 1L) {
-    switch(distname, 
-           gamma = return(pgamma(q = q, shape = pars[,1L], scale = pars[,2L], lower.tail = lower.tail, log.p = log.p)),
-           genpois1 = {
-             # ?VGAM::pgenpois1 do not have `log.p` argument
-             p <- pgenpois1(q = q, meanpar = pars[,1L], dispind = pars[,2L], lower.tail = lower.tail)
-             if (!log.p) return(p)
-             return(log(p))
-           },
-           nbinom = return(pnbinom(q = q, size = pars[,1L], prob = pars[,2L], lower.tail = lower.tail, log.p = log.p)),
-           norm = return(pnorm(q = q, mean = pars[,1L], sd = pars[,2L], lower.tail = lower.tail, log.p = log.p)),
-           GH = return(pGH(q = q, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], lower.tail = lower.tail, log.p = log.p, ...)),
+    
+    p <- switch(distname, 
+           gamma = pgamma(q = q, shape = pars[,1L], scale = pars[,2L]),
+           nbinom = pnbinom(q = q, size = pars[,1L], prob = pars[,2L]),
+           norm = pnorm(q = q, mean = pars[,1L], sd = pars[,2L]),
+           GH = pGH(q = q, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], ...),
            sn = {
-             p <- psn(x = q, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]) # first parameter is `x`, not `q`
-             if (!lower.tail) p <- 1 - p
-             if (log.p) return(log(p))
-             return(p)
+             psn(x = q, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]) # first parameter is `x`, not `q`
            },
            st = {
-             p <- pst(x = q, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]) # first parameter is `x`, not `q`
-             if (!lower.tail) p <- 1 - p
-             if (log.p) return(log(p))
-             return(p)
+             pst(x = q, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]) # first parameter is `x`, not `q`
            },
            stop('I do not have `p', distname, '` function'))
+    
+  } else {
+    
+    qM_naive <- tcrossprod(rep(1, times = K), q)
+    ps <- switch(distname, gamma = {
+      pgamma(qM_naive, shape = pars[,1L], scale = pars[,2L])
+    }, nbinom = {
+      pnbinom(qM_naive, size = pars[,1L], prob = pars[,2L])
+    }, sn = {
+      # ?sn::psn does not respect `attr(x, 'dim')`, but do handle \link[base]{matrix} `x` correctly
+      # packageDate('sn') 2023-04-04: *sometimes* get error by using matrix `x`, dont know why
+      # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]), dim = dim(qM_naive))
+      do.call(rbind, args = lapply(seq_len(K), FUN = \(i) psn(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L])))
+    }, st = {
+      # ?sn::pst does not respect `attr(x, 'dim')`, and do not handle \link[base]{matrix} `x` correctly!!
+      do.call(rbind, args = lapply(seq_len(K), FUN = \(i) pst(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L])))
+      # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]), dim = dim(qM_naive))
+      # range(tmp - tmp2) # not the same!!
+    }, norm = {
+      zM <- tcrossprod(1/pars[,2L], q) - pars[,1L]/pars[,2L]
+      pnorm(q = zM)
+    }, GH = {
+      zM <- tcrossprod(1/pars[,2L], q) - pars[,1L]/pars[,2L]
+      g <- pars[,3L]
+      h <- pars[,4L]
+      for (i in seq_len(K)) zM[i,] <- gh2z(q = zM[i,], g = g[i], h = h[i], ...)
+      pnorm(q = zM)
+    }, stop('I do not have `p', distname, '` function'))
+    
+    p <- c(crossprod(w, ps))
+    
   }
   
-  qM_naive <- tcrossprod(rep(1, times = K), q)
-  ps <- switch(distname, gamma = {
-    pgamma(qM_naive, shape = pars[,1L], scale = pars[,2L], lower.tail = lower.tail)
-  }, genpois1 = {
-    pgenpois1(qM_naive, meanpar = pars[,1L], dispind = pars[,2L], lower.tail = lower.tail)
-  }, nbinom = {
-    pnbinom(qM_naive, size = pars[,1L], prob = pars[,2L], lower.tail = lower.tail)
-  }, sn = {
-    # ?sn::psn does not respect `attr(x, 'dim')`, but do handle \link[base]{matrix} `x` correctly
-    # packageDate('sn') 2023-04-04: *sometimes* get error by using matrix `x`, dont know why
-    # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]), dim = dim(qM_naive))
-    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) psn(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L])))
-    if (!lower.tail) 1 - tmp else tmp
-  }, st = {
-    # ?sn::pst does not respect `attr(x, 'dim')`, and do not handle \link[base]{matrix} `x` correctly!!
-    tmp <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) pst(q, xi = pars[i,1L], omega = pars[i,2L], alpha = pars[i,3L], nu = pars[i,4L])))
-    # tmp2 <- array(psn(qM_naive, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]), dim = dim(qM_naive))
-    # range(tmp - tmp2) # not the same!!
-    if (!lower.tail) 1 - tmp else tmp
-  }, norm = {
-    zM <- tcrossprod(1/pars[,2L], q) - pars[,1L]/pars[,2L]
-    pnorm(q = zM, lower.tail = lower.tail)
-  }, GH = {
-    zM <- tcrossprod(1/pars[,2L], q) - pars[,1L]/pars[,2L]
-    gs <- pars[,3L]
-    hs <- pars[,4L]
-    for (i in seq_len(K)) zM[i,] <- GH2z(q0 = zM[i,], g = gs[i], h = hs[i], ...)
-    pnorm(q = zM, lower.tail = lower.tail)
-  }, stop('I do not have `p', distname, '` function'))
-  
-  p <- c(crossprod(w, ps))
-  if (log.p) return(log(p)) 
+  if (!lower.tail) p <- 1 - p
+  if (log.p) return(log(p))
   return(p)
 }
 
 
-#' @title Obtain `interval` for \link[TukeyGH77]{vuniroot2} for Function [qfmx()] 
+#' @title Obtain `interval` for \link[rstpm2]{vuniroot} for Function [qfmx()] 
 #' 
 #' @param dist \linkS4class{fmx} object
 #' 
@@ -230,31 +224,25 @@ qfmx_interval <- function(dist, p = c(1e-6, 1-1e-6), distname = dist@distname, K
 
 
 #' @rdname dfmx
-#' @importFrom TukeyGH77 qGH GH2z vuniroot2
+#' @importFrom TukeyGH77 qGH gh2z
+#' @importFrom rstpm2 vuniroot
 #' @export
 qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = dist@pars, w = dist@w, interval = qfmx_interval(dist = dist), ..., lower.tail = TRUE, log.p = FALSE) {
-  # if (!is.numeric(interval) || length(interval) != 2L || anyNA(interval)) stop('masked to save time')
+  
   if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
   
   if (K == 1L) {
     switch(
       EXPR = distname, 
-      gamma = return(qgamma(p, shape = pars[,1L], scale = pars[,1L], lower.tail = lower.tail, log.p = FALSE)),
-      genpois1 = {
-        # VGAM::qgenpois1 do not have arguments `lower.tail` and `log.p`
-        if (log.p) p <- exp(p)
-        if (!lower.tail) p <- 1 - p
-        return(qgenpois1(p, meanpar = pars[,1L], dispind = pars[,1L]))
-      },
-      nbinom = return(qnbinom(p, size = pars[,1L], prob = pars[,2L], lower.tail = lower.tail, log.p = FALSE)),
-      norm = return(qnorm(p, mean = pars[,1L], sd = pars[,2L], lower.tail = lower.tail, log.p = FALSE)),
-      GH = return(qGH(p, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L], lower.tail = lower.tail, log.p = FALSE)),
+      gamma = return(qgamma(p, shape = pars[,1L], scale = pars[,1L])),
+      nbinom = return(qnbinom(p, size = pars[,1L], prob = pars[,2L])),
+      norm = return(qnorm(p, mean = pars[,1L], sd = pars[,2L])),
+      GH = return(qGH(p, A = pars[,1L], B = pars[,2L], g = pars[,3L], h = pars[,4L])),
       sn = {
-        if (lower.tail) p <- 1 - p
         return(qsn(p, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L]))
       },
       st = {
-        if (lower.tail) p <- 1 - p
         return(qst(p, xi = pars[,1L], omega = pars[,2L], alpha = pars[,3L], nu = pars[,4L]))
       },
       stop('I do not have `q', distname, '` function'))
@@ -268,22 +256,22 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
   })
   
   ones <- rep(1, times = K)
-  # `f` in \link[TukeyGH77]{vuniroot2} is essentially \link[TukeyGH77]{pfmx} !!
+  # `f` in \link[rstpm2]{vuniroot} is essentially \link[TukeyGH77]{pfmx} !!
   f <- switch(distname, gamma = {
     shape <- pars[,1L]
     scale <- pars[,2L]
-    function(q) c(t_w %*% pgamma(tcrossprod(ones, q), shape = shape, scale = scale, lower.tail = lower.tail))
+    function(q) {
+      c(t_w %*% pgamma(tcrossprod(ones, q), shape = shape, scale = scale)) - p
+    }
     # R does not have a function for https://en.wikipedia.org/wiki/Incomplete_gamma_function
     # thus this calculation cannot be speed up, as for now..
     # see ?stats::pgamma for more details
-  }, genpois1 = {
-    meanpar <- pars[,1L]
-    dispind <- pars[,2L]
-    function(q) c(t_w %*% pgenpois1(tcrossprod(ones, q), meanpar = meanpar, dispind = dispind, lower.tail = lower.tail))
   }, nbinom = {
     size <- pars[,1L]
     prob <- pars[,2L]
-    function(q) c(t_w %*% pnbinom(tcrossprod(ones, q), size = size, prob = prob, lower.tail = lower.tail))
+    function(q) {
+      c(t_w %*% pnbinom(tcrossprod(ones, q), size = size, prob = prob)) - p
+    }
   }, sn = {
     xi <- pars[,1L]
     omega <- pars[,2L]
@@ -292,8 +280,7 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
       # ?sn::psn does not respect `attr(q, 'dim')`, but do handle \link[base]{matrix} `x` correctly
       #ps <- array(psn(tcrossprod(ones, q), xi = xi, omega = omega, alpha = alpha), dim = c(K, length(q)))
       ps <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) psn(q, xi = xi[i], omega = omega[i], alpha = alpha[i])))
-      if (!lower.tail) ps <- 1 - ps
-      c(t_w %*% ps)
+      c(t_w %*% ps) - p
     }
   }, st = {
     xi <- pars[,1L]
@@ -303,25 +290,25 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     function(q) {
       # ?sn::psn does not respect `attr(q, 'dim')`, and do not handle \link[base]{matrix} `x` correctly !!
       ps <- do.call(rbind, args = lapply(seq_len(K), FUN = \(i) pst(q, xi = xi[i], omega = omega[i], alpha = alpha[i], nu = nu[i])))
-      if (!lower.tail) ps <- 1 - ps
-      c(t_w %*% ps)
+      c(t_w %*% ps) - p
     }
   }, norm = {
     function(q) {
       zM <- tcrossprod(sdinv, q) - eff
-      c(t_w %*% pnorm(q = zM, lower.tail = lower.tail))
+      c(t_w %*% pnorm(q = zM)) - p
     }
   }, GH = {
-    gs <- pars[,3L]
-    hs <- pars[,4L]
+    g <- pars[,3L]
+    h <- pars[,4L]
     function(q) {
       z <- q0 <- tcrossprod(sdinv, q) - eff
-      for (i in seqid) z[i,] <- GH2z(q0 = q0[i,], g = gs[i], h = hs[i], ...)
-      c(t_w %*% pnorm(q = z, lower.tail = lower.tail))
+      for (i in seqid) z[i,] <- gh2z(q = q0[i,], g = g[i], h = h[i], ...)
+      c(t_w %*% pnorm(q = z)) - p
     }
   }, stop('I do not have `q', distname, '` function'))
   
-  return(vuniroot2(y = p, f = f, interval = interval))
+  #return(vuniroot2(y = p, f = f, interval = interval))
+  return(vuniroot(f = f, lower = interval[1L], upper = interval[2L])[[1L]])
 }
 
 
@@ -340,12 +327,17 @@ rfmx <- function(n, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     # important! do not disturb the random seed when `K = 1L`
   } else sample.int(n = K, size = n, replace = TRUE, prob = w)
   d2 <- cbind(pars, n = tabulate(id, nbins = K)) # 'matrix'
-  r_fn <- paste0('r', distname)
-  xs <- lapply(seq_len(K), FUN = \(i) {
-    do.call(what = r_fn, args = as.list.default(d2[i, ]))
-  })
-  out <- unlist(xs, use.names = FALSE)
-  return(out)
+  r <- paste0('r', distname)
+  
+  K |>
+    seq_len() |>
+    lapply(FUN = \(i) {
+      d2[i, ] |>
+        as.list.default() |> 
+        do.call(what = r)
+    }) |> 
+    unlist(use.names = FALSE)
+
 }
 
 
