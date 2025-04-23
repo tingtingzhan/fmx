@@ -307,7 +307,6 @@ qfmx <- function(p, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
     }
   }, stop('I do not have `q', distname, '` function'))
   
-  #return(vuniroot2(y = p, f = f, interval = interval))
   return(vuniroot(f = f, lower = interval[1L], upper = interval[2L])[[1L]])
 }
 
