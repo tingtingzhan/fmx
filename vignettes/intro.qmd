@@ -9,7 +9,11 @@ toc: true
 toc-location: left
 toc-depth: 4
 toc-title: ''
-editor: visual
+editor: source
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
 vignette: >
   %\VignetteIndexEntry{intro}
   %\VignetteEngine{quarto::html}
@@ -44,37 +48,16 @@ Examples in this vignette require that the `search` path has
 
 ```{r}
 library(fmx)
+library(TukeyGH77)
+library(sn)
 library(ggplot2)
-library(scales)
 ```
 
 ```{r}
 #| echo: false
-library(knitr) # for tables in this vignette
-theme_set(theme_bw())
+theme_bw() |> 
+  theme_set()
 graphics::par(mar = c(0, 0, 0, 0))
-#options(mc.cores = 1L) # for CRAN submission
-```
-
-## Terms and Abbreviations
-
-```{r echo = FALSE, results = 'asis'}
-c(
-  '', 'Forward pipe operator', '`?base::pipeOp` introduced in `R` 4.1.0', 
-  '`CRAN`, `R`', 'The Comprehensive R Archive Network', '<https://cran.r-project.org>',
-  '`curve`', 'Function plots', '`graphics::curve`',
-  '`fitdist`', 'Mixture of distribution from package **`fitdistrplus`**', '`fitdistrplus::fitdist`', 
-  '`GH`', 'Tukey\'s $g$-&-$h$ distribution', '`Tukey77::dGH`',
-  '`norm`', 'Normal distribution', '`stats::dnorm`',
-  '`object.size`', 'Memory allocation', '`utils::object.size`',
-  '`S3`, `generic`, `methods`', '`S3` object oriented system',  '`base::UseMethod`; `utils::methods`; `utils::getS3method`; <https://adv-r.hadley.nz/s3.html>',
-  '`S4`, `generic`, `methods`', '`S4` object oriented system',  '`base::isS4`; `methods::setClass`; `methods::getMethod`; <https://adv-r.hadley.nz/s4.html>',
-  '`search`', 'Search path', '`base::search`'
-) |>
-  matrix(nrow = 3L, dimnames = list(c('Term / Abbreviation', 'Description', 'Reference'), NULL)) |>
-  t.default() |>
-  as.data.frame.matrix() |> 
-  kable() 
 ```
 
 # `S4` Class `'fmx'`
@@ -86,8 +69,16 @@ The `S4` class stores the parameters of a mixture of distribution. Currently the
 Example below shows a mixture of two normal distributions $N(0,1)$ and $N(3,1.3)$ with $(50\%, 50\%)$ mixing probability (i.e., the mixing probability $w$ is normalize to so that the summation of $w$ is 1).
 
 ```{r}
-(e1 = fmx('norm', mean = c(0,3), sd = c(1,1.3), w = c(1, 1)))
+(e1 = fmx('norm', mean = c(0,3), sd = c(1, .7), w = c(1, 1)))
+```
+
+
+```{r}
 class(e1)
+```
+
+
+```{r}
 isS4(e1)
 ```
 
@@ -111,14 +102,14 @@ Function `dfmx()` ...
 #| fig-height: 3
 #| fig-width: 4
 par(mar = c(4, 5, 1, 0))
-curve(dfmx(x, dist = e1), xlim = c(-3,7), n = 501L, ylab = 'Density')
+curve(dfmx(x, dist = e1), xlim = c(-3,7), ylab = 'Density')
 ```
 
 ```{r}
 #| fig-height: 3
 #| fig-width: 4
 ggplot() + 
-  geom_function(fun = dfmx, args = list(dist = e1), xlim = c(-3,7), n = 501L)
+  geom_function(fun = dfmx, args = list(dist = e1), xlim = c(-3,7))
 ```
 
 ## Probability
@@ -127,15 +118,15 @@ ggplot() +
 #| fig-height: 3
 #| fig-width: 4
 par(mar = c(4, 5, 1, 0))
-curve(pfmx(x, dist = e1), xlim = c(-3,7), n = 501L, ylab = 'Probability')
+curve(pfmx(x, dist = e1), xlim = c(-3,7), ylab = 'Probability')
 ```
 
 ```{r}
 #| fig-height: 3
 #| fig-width: 4
 ggplot() + 
-  geom_function(fun = pfmx, args = list(dist = e1), xlim = c(-3,7), n = 501L) + 
-  scale_y_continuous(labels = percent)
+  geom_function(fun = pfmx, args = list(dist = e1), xlim = c(-3,7)) + 
+  scale_y_continuous(labels = scales::label_percent())
 ```
 
 ## Quantile
@@ -144,7 +135,7 @@ ggplot() +
 #| fig-height: 3
 #| fig-width: 4
 par(mar = c(4, 5, 1, 0))
-curve(qfmx(x, dist = e1), xlim = c(.001,.999), n = 501L, ylab = 'Quantile')
+curve(qfmx(x, dist = e1), xlim = c(.001,.999), ylab = 'Quantile')
 ```
 
 ```{r}
@@ -152,7 +143,7 @@ curve(qfmx(x, dist = e1), xlim = c(.001,.999), n = 501L, ylab = 'Quantile')
 #| fig-width: 4
 ggplot() + 
   geom_function(fun = qfmx, args = list(dist = e1), n = 501L, xlim = c(.001, .999)) +
-  scale_x_continuous(labels = percent)
+  scale_x_continuous(labels = scales::label_percent())
 ```
 
 ## Simulation
@@ -173,6 +164,10 @@ new(Class = 'fmx', e1, data = r1)
 
 ```{r}
 (d = fmx('norm', mean = c(1, 4, 7), w = c(1, 1, 1)))
+```
+
+
+```{r}
 d[1:2]
 ```
 
@@ -182,9 +177,9 @@ d[1:2]
 #| fig-height: 3
 #| fig-width: 5
 ggplot() + 
- geom_function(fun = qfmx, args = list(dist=e1), mapping = aes(color='Normal'), n = 501L) + 
- geom_function(fun = qfmx, args = list(dist=e2), mapping = aes(color='Tukey gh'), n = 501L) + 
- scale_x_continuous(labels = label_percent(), limits = c(.001, .999)) +
+ geom_function(fun = qfmx, args = list(dist=e1), mapping = aes(color='Normal')) + 
+ geom_function(fun = qfmx, args = list(dist=e2), mapping = aes(color='Tukey gh')) + 
+ scale_x_continuous(labels = scales::label_percent(), limits = c(.001, .999)) +
  labs(x = NULL, y = 'Quantile', color = 'Mixture\nModels')
 ```
 
@@ -202,17 +197,29 @@ Consider three Tukey's $g$-&-$h$ mixture distributions.
 
 ```{r}
 d0 |> fmx_constraint()
+```
 
+
+```{r}
 d1 |> fmx_constraint()
+```
 
+
+```{r}
 d2 |> fmx_constraint()
 ```
 
 ```{r}
 getTeX(d0)
+```
 
+
+```{r}
 getTeX(d1)
+```
 
+
+```{r}
 getTeX(d2)
 ```
 
@@ -240,8 +247,20 @@ w = c(2, 3)
 
 ```{r}
 (m1 = moment2fmx(distname = 'GH', w = w, mean = m, sd = s, skewness = sk, kurtosis = kt))
+```
+
+
+```{r}
 moment_fmx(m1)
+```
+
+
+```{r}
 (m2 = moment2fmx(distname = 'st', w = w, mean = m, sd = s, skewness = sk, kurtosis = kt))
+```
+
+
+```{r}
 moment_fmx(m2)
 ```
 
@@ -260,3 +279,16 @@ Two curves looks really close, but actually not identical.
 x = seq.int(from = -5L, to = 6L, length.out = 1001L)
 all.equal.numeric(dfmx(x, dist = m1), dfmx(x, dist = m2))
 ```
+
+# Appendix
+
+## Terms and Abbreviations
+
+| Term / Abbreviation | Description |
+|------|------|
+| [`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html) | Forward pipe operator introduced in `R` 4.1.0 |
+| `CRAN`, `R` | [The Comprehensive R Archive Network](https://cran.r-project.org) |
+| [`curve`](https://search.r-project.org/R/refmans/graphics/html/curve.html) | Function plots |
+| [`fitdist`](https://search.r-project.org/CRAN/refmans/fitdistrplus/html/fitdist.html) | Mixture of distribution from package **`fitdistrplus`** |
+
+

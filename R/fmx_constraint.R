@@ -78,10 +78,10 @@ fmx_constraint <- function(dist, distname = dist@distname, K = dim(dist@pars)[1L
 user_constraint <- function(x, distname, K) {
   switch(distname, GH = {
     colID <- c('g', 'h')
-    gid <- as.integer(gsub('^g', replacement = '', x = grep('^g', x = x, value = TRUE))) # len-0 compatible
+    gid <- as.integer(gsub('^g', replacement = '', x = grepv('^g', x = x))) # len-0 compatible
     if (any(gid > K)) stop('having only ', K, ' components')
     gid1 <- 2L*K + gid # `g` parameters located at (2K+1L):(3K)
-    hid <- as.integer(gsub('^h', replacement = '', x = grep('^h', x = x, value = TRUE))) # len-0 compatible
+    hid <- as.integer(gsub('^h', replacement = '', x = grepv('^h', x = x))) # len-0 compatible
     if (any(hid > K)) stop('having only ', K, ' components')
     hid1 <- 3L*K + hid # `h` parameters located at (3K+1L):(4K)
     if (!length(ret <- c(gid1, hid1))) return(integer())

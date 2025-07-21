@@ -10,13 +10,13 @@ moment_fmx(object)
 \item{object}{an \linkS4class{fmx} object}
 }
 \value{
-Function \code{\link[=moment_fmx]{moment_fmx()}} returns a \linkS4class{moment} object.
+Function \code{\link[=moment_fmx]{moment_fmx()}} returns an object of the S4 \link[param2moment]{moment-class}.
 }
 \description{
 To find moments of each component in an \linkS4class{fmx} object.
 }
 \details{
-Function \code{\link[=moment_fmx]{moment_fmx()}} calculates the \linkS4class{moment}s
+Function \code{\link[=moment_fmx]{moment_fmx()}} calculates the moments
 and distribution characteristics of each mixture component of
 an S4 \linkS4class{fmx} object.
 }
