@@ -9,21 +9,11 @@ Description: A parametrization framework for finite mixture distribution
         negative binomial distributions are being tested.
 License: GPL-2
 Encoding: UTF-8
-Authors@R: c(person(given = "Tingting", family = "Zhan", role = c("aut",
+Authors@R: person(given = "Tingting", family = "Zhan", role = c("aut",
         "cre"), email = c("tingtingzhan@gmail.com"), comment = c(ORCID =
-        '0000-0001-9971-4844')), person(given = "Inna", family =
-        "Chervoneva", role = c("ctb"), email =
-        "Inna.Chervoneva@jefferson.edu", comment = c(ORCID =
-        '0000-0002-9104-4505')))
+        '0000-0001-9971-4844'))
 Language: en-US
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 4.4.0)
-Imports: methods, goftest, LaplacesDemon, rstpm2, sn, param2moment, TukeyGH77
-Suggests: 
-    ggplot2,
-    scales,
-    knitr,
-    quarto,
-    rmarkdown
-RoxygenNote: 7.3.2
-VignetteBuilder: quarto
+Depends: R (>= 4.5.0)
+Imports: methods, goftest (== 1.2.3), LaplacesDemon (== 16.1.8), rstpm2 (== 1.7.1), sn (== 2.1.3), param2moment, TukeyGH77
+RoxygenNote: 7.3.3
