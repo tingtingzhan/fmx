@@ -10,7 +10,7 @@ dist_logtrans(distname)
 \item{distname}{\link[base]{character} scalar, name of distribution}
 }
 \value{
-Function \code{\link[=dist_logtrans]{dist_logtrans()}} returns an \link[base]{integer} scalar
+The function [dist_logtrans()] returns an \link[base]{integer} scalar
 }
 \description{
 ..

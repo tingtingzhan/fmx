@@ -11,11 +11,11 @@
 #' 
 #' @details 
 #' 
-#' Function [pmlogis()] takes a length \eqn{k-1} \link[base]{double} \link[base]{vector} of 
+#' The function [pmlogis()] takes a length \eqn{k-1} \link[base]{double} \link[base]{vector} of 
 #' multinomial logits \eqn{q} and convert them into length \eqn{k} multinomial probabilities \eqn{p}, 
 #' regarding the *first* category as reference.
 #' 
-#' Function [qmlogis()] takes a length \eqn{k} \link[base]{double} \link[base]{vector} of 
+#' The function [qmlogis()] takes a length \eqn{k} \link[base]{double} \link[base]{vector} of 
 #' multinomial probabilities \eqn{p} and convert them into length \eqn{k-1} multinomial logits \eqn{q}, 
 #' regarding the *first* category as reference.
 #' 
@@ -26,9 +26,9 @@
 #' 
 #' @returns 
 #' 
-#' Function [pmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial probabilities \eqn{p}.
+#' The function [pmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial probabilities \eqn{p}.
 #' 
-#' Function [qmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial logits \eqn{q}.
+#' The function [qmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial logits \eqn{q}.
 #'
 #' @examples
 #' c(2,5,3) |> qmlogis() |> pmlogis()

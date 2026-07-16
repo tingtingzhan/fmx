@@ -10,7 +10,7 @@ distType(type = c("discrete", "nonNegContinuous", "continuous"))
 \item{type}{\link[base]{character} scalar}
 }
 \value{
-Function \code{\link[=distType]{distType()}} returns a \link[base]{character} \link[base]{vector}.
+The function [distType()] returns a \link[base]{character} \link[base]{vector}.
 }
 \description{
 ..

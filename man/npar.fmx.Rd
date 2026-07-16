@@ -10,13 +10,13 @@ npar.fmx(dist)
 \item{dist}{\linkS4class{fmx} object}
 }
 \value{
-Function \code{\link[=npar.fmx]{npar.fmx()}} returns an \link[base]{integer} scalar.
+The function [npar.fmx()] returns an \link[base]{integer} scalar.
 }
 \description{
 ..
 }
 \details{
 Also the degree-of-freedom in \link[stats]{logLik},
-as well as \code{stats:::AIC.logLik} and \code{stats:::BIC.logLik}
+as well as `stats:::AIC.logLik` and `stats:::BIC.logLik`
 }
 \keyword{internal}

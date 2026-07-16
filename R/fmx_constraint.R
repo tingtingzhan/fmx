@@ -22,7 +22,7 @@
 #' 
 #' @returns 
 #' 
-#' Function [fmx_constraint()] returns the indices of internal parameters 
+#' The function [fmx_constraint()] returns the indices of internal parameters 
 #' (only applicable to Tukey \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained, 
 #' based on the input \linkS4class{fmx} object `dist`.
 #' 
@@ -68,7 +68,7 @@ fmx_constraint <- function(dist, distname = dist@distname, K = dim(dist@pars)[1L
 #' 
 #' @returns 
 #' 
-#' Function [user_constraint()] returns the indices of internal parameters 
+#' The function [user_constraint()] returns the indices of internal parameters 
 #' (only applicable to Tukey's \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained, 
 #' based on the type of distribution `distname`, number of components `K`
 #' and a user-specified string (e.g., `c('g2', 'h1')`).
@@ -110,7 +110,7 @@ user_constraint <- function(x, distname, K) {
 #' 
 #' @returns 
 #' 
-#' Function [getTeX()] returns a \link[base]{character} scalar 
+#' The function [getTeX()] returns a \link[base]{character} scalar 
 #' (of TeX expression) of the constraint, 
 #' primarily intended for end-users in plots.
 #' 
@@ -158,7 +158,7 @@ getTeX <- function(dist, print_K = FALSE) {
 #' as well as `stats:::AIC.logLik` and `stats:::BIC.logLik`
 #' 
 #' @returns 
-#' Function [npar.fmx()] returns an \link[base]{integer} scalar.
+#' The function [npar.fmx()] returns an \link[base]{integer} scalar.
 #' 
 #' @keywords internal
 #' @export

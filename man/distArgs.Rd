@@ -10,7 +10,7 @@ distArgs(distname)
 \item{distname}{\link[base]{character} scalar, name of distribution}
 }
 \value{
-Function \code{\link[=distArgs]{distArgs()}} returns a \link[base]{character} \link[base]{vector}.
+The function [distArgs()] returns a \link[base]{character} \link[base]{vector}.
 }
 \description{
 To obtain the name(s) of distribution parameter(s).

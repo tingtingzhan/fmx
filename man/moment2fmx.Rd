@@ -11,12 +11,12 @@ moment2fmx(distname, w, ...)
 
 \item{w}{\link[base]{numeric} \link[base]{vector}}
 
-\item{...}{\link[base]{numeric} scalars,
-some or all of \code{mean}, \code{sd}, \code{skewness} and \code{kurtosis}
+\item{...}{\link[base]{numeric} scalars, 
+some or all of `mean`, `sd`, `skewness` and `kurtosis`
 (length will be recycled), see \link[param2moment]{moment2param}}
 }
 \value{
-Function \code{\link[=moment2fmx]{moment2fmx()}} returns a \linkS4class{fmx} object.
+The function [moment2fmx()] returns a \linkS4class{fmx} object.
 }
 \description{
 Creates \linkS4class{fmx} Object with Given Component-Wise Moments

@@ -9,7 +9,7 @@ user_constraint(x, distname, K)
 \arguments{
 \item{x}{\link[base]{character} \link[base]{vector}, constraint(s) to be imposed.
 For example, for a two-component Tukey \eqn{g}-&-\eqn{h}
-mixture, \code{c('g1', 'h2')} indicates \eqn{g_1=h_2=0} given \eqn{A_1 < A_2}, i.e., the
+mixture, `c('g1', 'h2')` indicates \eqn{g_1=h_2=0} given \eqn{A_1 < A_2}, i.e., the 
 \eqn{g}-parameter for the first component (with smaller location value)
 and the \eqn{h}-parameter for the second component (with larger mean value) are to be constrained as 0.}
 
@@ -18,10 +18,10 @@ and the \eqn{h}-parameter for the second component (with larger mean value) are 
 \item{K}{\link[base]{integer} scalar, number of components}
 }
 \value{
-Function \code{\link[=user_constraint]{user_constraint()}} returns the indices of internal parameters
-(only applicable to Tukey's \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained,
-based on the type of distribution \code{distname}, number of components \code{K}
-and a user-specified string (e.g., \code{c('g2', 'h1')}).
+The function [user_constraint()] returns the indices of internal parameters 
+(only applicable to Tukey's \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained, 
+based on the type of distribution `distname`, number of components `K`
+and a user-specified string (e.g., `c('g2', 'h1')`).
 }
 \description{
 Formalize user-specified constraint of \linkS4class{fmx} object

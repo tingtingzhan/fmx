@@ -9,7 +9,7 @@
 #' @param type \link[base]{character} scalar
 #' 
 #' @returns 
-#' Function [distType()] returns a \link[base]{character} \link[base]{vector}. 
+#' The function [distType()] returns a \link[base]{character} \link[base]{vector}. 
 #' 
 #' @keywords internal
 #' @export
@@ -55,7 +55,7 @@ distType <- function(type = c('discrete', 'nonNegContinuous', 'continuous')) {
 #' @param distname \link[base]{character} scalar, name of distribution
 #' 
 #' @returns 
-#' Function [distArgs()] returns a \link[base]{character} \link[base]{vector}.
+#' The function [distArgs()] returns a \link[base]{character} \link[base]{vector}.
 #' 
 #' @seealso 
 #' \link[methods]{formalArgs}
@@ -86,7 +86,7 @@ distArgs <- function(distname) {
 #' @param distname \link[base]{character} scalar, name of distribution
 #' 
 #' @returns 
-#' Function [dist_logtrans()] returns an \link[base]{integer} scalar
+#' The function [dist_logtrans()] returns an \link[base]{integer} scalar
 #' 
 #' @keywords internal
 #' @export

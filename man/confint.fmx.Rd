@@ -14,15 +14,15 @@
 \item{level}{confidence level, default \eqn{95\%}.}
 }
 \value{
-Function \code{\link[=confint.fmx]{confint.fmx()}} returns a \link[base]{matrix}
+The function [confint.fmx()] returns a \link[base]{matrix}
 }
 \description{
 ...
 }
 \details{
-Function \code{\link[=confint.fmx]{confint.fmx()}} returns the Wald-type confidence intervals based on the user-friendly parameters (\code{parm = 'user'}),
-or the internal/unconstrained parameters (\code{parm = 'internal'}).
-When the distribution has constraints on one or more parameters,
-function \code{\link[=confint.fmx]{confint.fmx()}} does not return the confident intervals of for the constrained parameters.
+The function [confint.fmx()] returns the Wald-type confidence intervals based on the user-friendly parameters (`parm = 'user'`),
+ or the internal/unconstrained parameters (`parm = 'internal'`).
+When the distribution has constraints on one or more parameters, 
+function [confint.fmx()] does not return the confident intervals of for the constrained parameters.
 }
 \keyword{internal}

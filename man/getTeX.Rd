@@ -10,11 +10,11 @@ getTeX(dist, print_K = FALSE)
 \item{dist}{\linkS4class{fmx} object}
 
 \item{print_K}{\link[base]{logical} scalar, whether to print the number of components \eqn{K}.
-Default \code{FALSE}.}
+Default `FALSE`.}
 }
 \value{
-Function \code{\link[=getTeX]{getTeX()}} returns a \link[base]{character} scalar
-(of TeX expression) of the constraint,
+The function [getTeX()] returns a \link[base]{character} scalar 
+(of TeX expression) of the constraint, 
 primarily intended for end-users in plots.
 }
 \description{

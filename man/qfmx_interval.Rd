@@ -2,7 +2,7 @@
 % Please edit documentation in R/dpqr.R
 \name{qfmx_interval}
 \alias{qfmx_interval}
-\title{Obtain \code{interval} for \link[rstpm2]{vuniroot} for Function \code{\link[=qfmx]{qfmx()}}}
+\title{Obtain `interval` for \link[rstpm2]{vuniroot} for Function [qfmx()]}
 \usage{
 qfmx_interval(
   dist,
@@ -19,14 +19,14 @@ qfmx_interval(
 
 \item{p}{\link[base]{length}-2 \link[base]{numeric} \link[base]{vector}}
 
-\item{distname, K, pars, w}{(optional) ignored if \code{dist} is provided}
+\item{distname, K, pars, w}{(optional) ignored if `dist` is provided}
 
 \item{...}{additional parameters, currently not used}
 }
 \value{
-Function \code{\link[=qfmx_interval]{qfmx_interval()}} returns a \link[base]{length}-2 \link[base]{numeric} \link[base]{vector}.
+The function [qfmx_interval()] returns a \link[base]{length}-2 \link[base]{numeric} \link[base]{vector}.
 }
 \description{
-Obtain \code{interval} for \link[rstpm2]{vuniroot} for Function \code{\link[=qfmx]{qfmx()}}
+Obtain `interval` for \link[rstpm2]{vuniroot} for Function [qfmx()]
 }
 \keyword{internal}

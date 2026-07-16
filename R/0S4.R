@@ -146,7 +146,7 @@ setMethod(f = initialize, signature = 'fmx', definition = function(.Object, ...)
 #' or \link[stats]{dnorm} for the names and default values of normal distribution parameters.
 #' 
 #' @returns 
-#' Function [fmx()] returns an \linkS4class{fmx} object.
+#' The function [fmx()] returns an \linkS4class{fmx} object.
 #' 
 #' @importFrom TukeyGH77 dGH
 #' @export

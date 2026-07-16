@@ -12,13 +12,13 @@
 \item{...}{additional parameters, currently of no use}
 }
 \value{
-Function \code{\link[=nobs.fmx]{nobs.fmx()}} returns an \link[base]{integer} scalar.
+The function [nobs.fmx()] returns an \link[base]{integer} scalar.
 }
 \description{
 Number of observations in an \linkS4class{fmx} object.
 }
 \details{
-Function \code{\link[=nobs.fmx]{nobs.fmx()}} finds the sample size of \verb{@data} slot of
+The function [nobs.fmx()] finds the sample size of `@data` slot of
 an \linkS4class{fmx} object.
 }
 \keyword{internal}

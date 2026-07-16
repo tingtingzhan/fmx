@@ -7,12 +7,12 @@
 #' @param object an \linkS4class{fmx} object
 #' 
 #' @details
-#' Function [moment_fmx()] calculates the moments 
+#' The function [moment_fmx()] calculates the moments 
 #' and distribution characteristics of each mixture component of 
 #' an S4 \linkS4class{fmx} object.
 #' 
 #' @returns 
-#' Function [moment_fmx()] returns an object of the S4 \link[param2moment]{moment-class}.
+#' The function [moment_fmx()] returns an object of the S4 \link[param2moment]{moment-class}.
 #' 
 #' @keywords internal
 #' @importFrom param2moment moment_GH moment_norm moment_sn moment_st
@@ -40,7 +40,7 @@ moment_fmx <- function(object) {
 #' (length will be recycled), see \link[param2moment]{moment2param}
 #' 
 #' @returns 
-#' Function [moment2fmx()] returns a \linkS4class{fmx} object.
+#' The function [moment2fmx()] returns a \linkS4class{fmx} object.
 #' 
 #' @keywords internal
 #' @importFrom param2moment moment2param

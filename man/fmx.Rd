@@ -10,14 +10,14 @@ fmx(distname, w = 1, ...)
 \item{distname}{\link[base]{character} scalar}
 
 \item{w}{(optional) \link[base]{numeric} \link[base]{vector}.
-Does not need to sum up to 1; \code{w/sum(w)} will be used internally.}
+Does not need to sum up to 1; `w/sum(w)` will be used internally.}
 
 \item{...}{mixture distribution parameters.
-See function \link[TukeyGH77]{dGH} for the names and default values of Tukey \eqn{g}-&-\eqn{h} distribution parameters,
+See function \link[TukeyGH77]{dGH} for the names and default values of Tukey \eqn{g}-&-\eqn{h} distribution parameters, 
 or \link[stats]{dnorm} for the names and default values of normal distribution parameters.}
 }
 \value{
-Function \code{\link[=fmx]{fmx()}} returns an \linkS4class{fmx} object.
+The function [fmx()] returns an \linkS4class{fmx} object.
 }
 \description{
 To create \linkS4class{fmx} object for finite mixture distribution.

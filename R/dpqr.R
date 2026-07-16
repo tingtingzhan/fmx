@@ -34,7 +34,7 @@
 #' which happens when the per-component log densities are negative with big absolute values.  
 #' In such case, we cannot compute the log densities (i.e., `-Inf`).
 #' 
-#' Function [qfmx()] gives the quantile function, by numerically solving [pfmx].
+#' The function [qfmx()] gives the quantile function, by numerically solving [pfmx].
 #' One major challenge when dealing with the finite mixture of Tukey \eqn{g}-&-\eqn{h} family distribution
 #' is that Brent–Dekker's method needs to be performed in both \link[TukeyGH77]{pGH} and [qfmx] functions, 
 #' i.e. *two layers* of root-finding algorithm.
@@ -42,16 +42,16 @@
 #' 
 #' @returns 
 #' 
-#' Function [dfmx()] returns a \link[base]{numeric} \link[base]{vector} of probability density values of an \linkS4class{fmx} object at specified quantiles `x`.
+#' The function [dfmx()] returns a \link[base]{numeric} \link[base]{vector} of probability density values of an \linkS4class{fmx} object at specified quantiles `x`.
 #' 
-#' Function [pfmx()] returns a \link[base]{numeric} \link[base]{vector} of cumulative probability values of an \linkS4class{fmx} object at specified quantiles `q`.
+#' The function [pfmx()] returns a \link[base]{numeric} \link[base]{vector} of cumulative probability values of an \linkS4class{fmx} object at specified quantiles `q`.
 #' 
-#' Function [qfmx()] returns an unnamed \link[base]{numeric} \link[base]{vector} of quantiles of an \linkS4class{fmx} object, based on specified cumulative probabilities `p`.
+#' The function [qfmx()] returns an unnamed \link[base]{numeric} \link[base]{vector} of quantiles of an \linkS4class{fmx} object, based on specified cumulative probabilities `p`.
 #' 
-#' Function [rfmx()] generates random deviates of an \linkS4class{fmx} object.
+#' The function [rfmx()] generates random deviates of an \linkS4class{fmx} object.
 #' 
 #' @note
-#' Function \link[stats]{qnorm} returns an unnamed \link[base]{vector} of quantiles, 
+#' The function \link[stats]{qnorm} returns an unnamed \link[base]{vector} of quantiles, 
 #' although \link[stats]{quantile} returns a named \link[base]{vector} of quantiles.
 #' 
 #' @keywords internal
@@ -197,7 +197,7 @@ pfmx <- function(q, dist, distname = dist@distname, K = dim(pars)[1L], pars = di
 #' @param ... additional parameters, currently not used
 #' 
 #' @returns 
-#' Function [qfmx_interval()] returns a \link[base]{length}-2 \link[base]{numeric} \link[base]{vector}.
+#' The function [qfmx_interval()] returns a \link[base]{length}-2 \link[base]{numeric} \link[base]{vector}.
 #' 
 #' @keywords internal
 #' @export

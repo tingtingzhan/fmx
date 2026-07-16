@@ -53,20 +53,20 @@ rfmx(
 )
 }
 \arguments{
-\item{x, q}{\link[base]{numeric} \link[base]{vector}, quantiles, \code{NA_real_} value(s) allowed.}
+\item{x, q}{\link[base]{numeric} \link[base]{vector}, quantiles, `NA_real_` value(s) allowed.}
 
 \item{dist}{\linkS4class{fmx} object, a finite mixture distribution}
 
-\item{distname, K, pars, w}{auxiliary parameters, whose default values are determined by argument \code{dist}.
-The user-specified \link[base]{vector} of \code{w} does not need to sum up to 1; \code{w/sum(w)} will be used internally.}
+\item{distname, K, pars, w}{auxiliary parameters, whose default values are determined by argument `dist`.
+The user-specified \link[base]{vector} of `w` does not need to sum up to 1; `w/sum(w)` will be used internally.}
 
 \item{...}{additional parameters}
 
-\item{log, log.p}{\link[base]{logical} scalar.
-If \code{TRUE}, probabilities are given as \eqn{\log(p)}.}
+\item{log, log.p}{\link[base]{logical} scalar. 
+If `TRUE`, probabilities are given as \eqn{\log(p)}.}
 
-\item{lower.tail}{\link[base]{logical} scalar.
-If \code{TRUE} (default), probabilities are \eqn{Pr(X\le x)}, otherwise, \eqn{Pr(X>x)}.}
+\item{lower.tail}{\link[base]{logical} scalar. 
+If `TRUE` (default), probabilities are \eqn{Pr(X\le x)}, otherwise, \eqn{Pr(X>x)}.}
 
 \item{p}{\link[base]{numeric} \link[base]{vector}, probabilities.}
 
@@ -75,30 +75,30 @@ If \code{TRUE} (default), probabilities are \eqn{Pr(X\le x)}, otherwise, \eqn{Pr
 \item{n}{\link[base]{integer} scalar, number of observations.}
 }
 \value{
-Function \code{\link[=dfmx]{dfmx()}} returns a \link[base]{numeric} \link[base]{vector} of probability density values of an \linkS4class{fmx} object at specified quantiles \code{x}.
+The function [dfmx()] returns a \link[base]{numeric} \link[base]{vector} of probability density values of an \linkS4class{fmx} object at specified quantiles `x`.
 
-Function \code{\link[=pfmx]{pfmx()}} returns a \link[base]{numeric} \link[base]{vector} of cumulative probability values of an \linkS4class{fmx} object at specified quantiles \code{q}.
+The function [pfmx()] returns a \link[base]{numeric} \link[base]{vector} of cumulative probability values of an \linkS4class{fmx} object at specified quantiles `q`.
 
-Function \code{\link[=qfmx]{qfmx()}} returns an unnamed \link[base]{numeric} \link[base]{vector} of quantiles of an \linkS4class{fmx} object, based on specified cumulative probabilities \code{p}.
+The function [qfmx()] returns an unnamed \link[base]{numeric} \link[base]{vector} of quantiles of an \linkS4class{fmx} object, based on specified cumulative probabilities `p`.
 
-Function \code{\link[=rfmx]{rfmx()}} generates random deviates of an \linkS4class{fmx} object.
+The function [rfmx()] generates random deviates of an \linkS4class{fmx} object.
 }
 \description{
-Density function, distribution function, quantile function and random generation for a finite mixture distribution
+Density function, distribution function, quantile function and random generation for a finite mixture distribution 
 with normal or Tukey \eqn{g}-&-\eqn{h} components.
 }
 \details{
-A computational challenge in function \code{\link[=dfmx]{dfmx()}} is when mixture density is very close to 0,
-which happens when the per-component log densities are negative with big absolute values.
-In such case, we cannot compute the log densities (i.e., \code{-Inf}).
+A computational challenge in function [dfmx()] is when mixture density is very close to 0,
+which happens when the per-component log densities are negative with big absolute values.  
+In such case, we cannot compute the log densities (i.e., `-Inf`).
 
-Function \code{\link[=qfmx]{qfmx()}} gives the quantile function, by numerically solving \link{pfmx}.
+The function [qfmx()] gives the quantile function, by numerically solving [pfmx].
 One major challenge when dealing with the finite mixture of Tukey \eqn{g}-&-\eqn{h} family distribution
-is that Brent–Dekker's method needs to be performed in both \link[TukeyGH77]{pGH} and \link{qfmx} functions,
-i.e. \emph{two layers} of root-finding algorithm.
+is that Brent–Dekker's method needs to be performed in both \link[TukeyGH77]{pGH} and [qfmx] functions, 
+i.e. *two layers* of root-finding algorithm.
 }
 \note{
-Function \link[stats]{qnorm} returns an unnamed \link[base]{vector} of quantiles,
+The function \link[stats]{qnorm} returns an unnamed \link[base]{vector} of quantiles, 
 although \link[stats]{quantile} returns a named \link[base]{vector} of quantiles.
 }
 \keyword{internal}

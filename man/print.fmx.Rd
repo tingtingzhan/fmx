@@ -12,7 +12,7 @@
 \item{...}{additional parameters, not currently in use}
 }
 \value{
-Function \code{\link[=print.fmx]{print.fmx()}} returns the input \linkS4class{fmx} object invisibly.
+The function [print.fmx()] returns the input \linkS4class{fmx} object invisibly.
 }
 \description{
 ..

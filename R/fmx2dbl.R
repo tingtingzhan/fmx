@@ -31,7 +31,7 @@
 #' for `'GH'`: `B -> log(B), h -> log(h)`
 #' 
 #' @returns 
-#' Function [fmx2dbl()] returns a \link[base]{numeric} \link[base]{vector}.
+#' The function [fmx2dbl()] returns a \link[base]{numeric} \link[base]{vector}.
 #' 
 #' @seealso [dbl2fmx()]
 #' @keywords internal
@@ -83,7 +83,7 @@ fmx2dbl <- function(x, distname = x@distname, pars = x@pars, K = dim(pars)[1L], 
 #' Only used in downstream function `QuantileGH::QLMDe` and unexported function `QuantileGH:::qfmx_gr`, not compute intensive.
 #' 
 #' @returns 
-#' Function [dbl2fmx()] returns a \link[base]{list} with two elements `$pars` and `$w`
+#' The function [dbl2fmx()] returns a \link[base]{list} with two elements `$pars` and `$w`
 #' 
 #' @keywords internal
 #' @export

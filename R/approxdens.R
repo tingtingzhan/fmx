@@ -13,7 +13,7 @@
 #' another 'layer' of \link[stats]{approxfun}
 #' 
 #' @returns 
-#' Function [approxdens()] returns a \link[base]{function}.
+#' The function [approxdens()] returns a \link[base]{function}.
 #' 
 #' @examples
 #' set.seed(135); x = rnorm(1e3L)

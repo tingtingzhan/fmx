@@ -9,17 +9,17 @@ as.fmx(x, ...)
 \arguments{
 \item{x}{an R object}
 
-\item{...}{additional parameters, see \strong{Arguments} in individual S3 dispatches}
+\item{...}{additional parameters, see **Arguments** in individual S3 dispatches}
 }
 \value{
-S3 generic function \code{\link[=as.fmx]{as.fmx()}} returns an \linkS4class{fmx} object.
+S3 generic function [as.fmx()] returns an \linkS4class{fmx} object.
 }
 \description{
-Turn various objects created in other R packages
+Turn various objects created in other R packages 
 to \linkS4class{fmx} class.
 }
 \details{
 Various mixture distribution estimates obtained from other R packages
-are converted to \linkS4class{fmx} class,
+are converted to \linkS4class{fmx} class, 
 so that we could take advantage of all methods defined for \linkS4class{fmx} objects.
 }

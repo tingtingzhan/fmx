@@ -5,24 +5,24 @@
 \alias{fmx-class}
 \title{\linkS4class{fmx} Class: Finite Mixture Parametrization}
 \description{
-An S4 object to specify
-the parameters and type of distribution
+An S4 object to specify 
+the parameters and type of distribution 
 of a one-dimensional finite mixture distribution.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{distname}}{\link[base]{character} scalar,
+\item{\code{distname}}{\link[base]{character} scalar, 
 name of parametric distribution of the mixture components.
-Currently, normal (\code{'norm'}) and Tukey \eqn{g}-&-\eqn{h} (\code{'GH'}) distributions are supported.}
+Currently, normal (`'norm'`) and Tukey \eqn{g}-&-\eqn{h} (`'GH'`) distributions are supported.}
 
-\item{\code{pars}}{\link[base]{double} \link[base]{matrix},
-all distribution parameters in the mixture.
+\item{\code{pars}}{\link[base]{double} \link[base]{matrix}, 
+all distribution parameters in the mixture. 
 Each row corresponds to one component. Each column includes the same parameters of all components.
 The order of rows corresponds to the (non-strictly) increasing order of the component location parameters.
-The columns match the formal arguments of the corresponding distribution,
-e.g., \code{'mean'} and \code{'sd'} for \link[stats]{Normal} mixture,
-or \code{'A'}, \code{'B'}, \code{'g'} and \code{'h'} for Tukey \eqn{g}-&-\eqn{h} mixture.}
+The columns match the formal arguments of the corresponding distribution, 
+e.g., `'mean'` and `'sd'` for \link[stats]{Normal} mixture, 
+or `'A'`, `'B'`, `'g'` and `'h'` for Tukey \eqn{g}-&-\eqn{h} mixture.}
 
 \item{\code{w}}{\link[base]{numeric} \link[base]{vector} of mixing proportions that must sum to 1}
 

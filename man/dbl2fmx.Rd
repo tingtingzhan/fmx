@@ -2,7 +2,7 @@
 % Please edit documentation in R/fmx2dbl.R
 \name{dbl2fmx}
 \alias{dbl2fmx}
-\title{Inverse of \link{fmx2dbl}, for internal use}
+\title{Inverse of [fmx2dbl], for internal use}
 \usage{
 dbl2fmx(x, K, distname, ...)
 }
@@ -16,12 +16,12 @@ dbl2fmx(x, K, distname, ...)
 \item{...}{additional parameters, not currently used}
 }
 \value{
-Function \code{\link[=dbl2fmx]{dbl2fmx()}} returns a \link[base]{list} with two elements \verb{$pars} and \verb{$w}
+The function [dbl2fmx()] returns a \link[base]{list} with two elements `$pars` and `$w`
 }
 \description{
 ..
 }
 \details{
-Only used in downstream function \code{QuantileGH::QLMDe} and unexported function \code{QuantileGH:::qfmx_gr}, not compute intensive.
+Only used in downstream function `QuantileGH::QLMDe` and unexported function `QuantileGH:::qfmx_gr`, not compute intensive.
 }
 \keyword{internal}

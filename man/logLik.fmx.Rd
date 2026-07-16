@@ -12,7 +12,7 @@
 \item{...}{additional parameters, currently of no use}
 }
 \value{
-Function \code{\link[=logLik.fmx]{logLik.fmx()}} returns a \link[stats]{logLik} object.
+The function [logLik.fmx()] returns a \link[stats]{logLik} object.
 }
 \description{
 Log-likelihood of an \linkS4class{fmx} object.

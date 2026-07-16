@@ -5,17 +5,22 @@
 \alias{fmx-package}
 \title{Finite Mixture Parametrization}
 \description{
-A parametrization framework for finite mixture
-distribution using S4 objects.
+A parametrization framework for finite mixture 
+distribution using S4 objects. 
 
-Density, cumulative density, quantile and simulation
+Density, cumulative density, quantile and simulation 
 functions are defined.
 
-Currently normal, Tukey \eqn{g}-&-\eqn{h}, skew-normal and skew-\eqn{t}
+Currently normal, Tukey \eqn{g}-&-\eqn{h}, skew-normal and skew-\eqn{t} 
 distributions are well tested. The gamma, negative
 binomial distributions are being tested.
 }
 \author{
 \strong{Maintainer}: Tingting Zhan \email{tingtingzhan@gmail.com} (\href{https://orcid.org/0000-0001-9971-4844}{ORCID})
+
+Authors:
+\itemize{
+  \item Tingting Zhan \email{tingtingzhan@gmail.com} (\href{https://orcid.org/0000-0001-9971-4844}{ORCID})
+}
 
 }

@@ -9,12 +9,12 @@
 \arguments{
 \item{x}{\linkS4class{fmx} object}
 
-\item{i}{\link[base]{integer} or \link[base]{logical} \link[base]{vector},
-the \emph{row} indices of \emph{components} to be chosen, see \link[base]{[}}
+\item{i}{\link[base]{integer} or \link[base]{logical} \link[base]{vector}, 
+the *row* indices of *components* to be chosen, see \link[base]{[}}
 }
 \value{
 An \linkS4class{fmx} object consisting of a subset of components.
-Information about the observations (e.g. slots \verb{@data} and \verb{@data.name}),
+Information about the observations (e.g. slots `@data` and `@data.name`),
 will be lost.
 }
 \description{

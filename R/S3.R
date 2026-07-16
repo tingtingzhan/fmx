@@ -11,7 +11,7 @@
 #' @param ... additional parameters, not currently in use
 #' 
 #' @returns 
-#' Function [print.fmx()] returns the input \linkS4class{fmx} object invisibly.
+#' The function [print.fmx()] returns the input \linkS4class{fmx} object invisibly.
 #' 
 #' @keywords internal
 #' @export print.fmx
@@ -98,13 +98,13 @@ print.fmx <- function(x, ...) {
 #' 
 #' @details 
 #' 
-#' Function [confint.fmx()] returns the Wald-type confidence intervals based on the user-friendly parameters (`parm = 'user'`),
+#' The function [confint.fmx()] returns the Wald-type confidence intervals based on the user-friendly parameters (`parm = 'user'`),
 #'  or the internal/unconstrained parameters (`parm = 'internal'`).
 #' When the distribution has constraints on one or more parameters, 
 #' function [confint.fmx()] does not return the confident intervals of for the constrained parameters.
 #'  
 #' @returns 
-#' Function [confint.fmx()] returns a \link[base]{matrix}
+#' The function [confint.fmx()] returns a \link[base]{matrix}
 #' 
 #' @keywords internal
 #' @importFrom stats confint qnorm
@@ -138,7 +138,7 @@ confint.fmx <- function(object, ..., level = .95) {
 #' 
 #' @details 
 #' 
-#' Function [vcov.fmx()] returns 
+#' The function [vcov.fmx()] returns 
 #' the approximate asymptotic variance-covariance \link[base]{matrix} of the user-friendly parameters via delta-method (`parm = 'user'`), 
 #' or the asymptotic variance-covariance matrix of the internal/unconstrained parameters (`parm = 'internal'`). 
 #' When the distribution has constraints on one or more parameters, 
@@ -146,7 +146,7 @@ confint.fmx <- function(object, ..., level = .95) {
 #' 
 #' @returns 
 #' 
-#' Function [vcov.fmx()] returns a \link[base]{matrix}.
+#' The function [vcov.fmx()] returns a \link[base]{matrix}.
 #' 
 #' @keywords internal
 #' @importFrom stats vcov
@@ -229,14 +229,14 @@ vcov.fmx <- function(object, internal = FALSE, ...) {
 #' 
 #' @details 
 #' 
-#' Function [coef.fmx()] returns the estimates of the user-friendly parameters (`parm = 'user'`), 
+#' The function [coef.fmx()] returns the estimates of the user-friendly parameters (`parm = 'user'`), 
 #' or the internal/unconstrained parameters (\code{parm = 'internal'}).
 #' When the distribution has constraints on one or more parameters, 
 #' function [coef.fmx()] does not return the estimates (which is constant \code{0}) of the constrained parameters.
 #' 
 #' @returns 
 #' 
-#' Function [coef.fmx()] returns a \link[base]{numeric} \link[base]{vector}.
+#' The function [coef.fmx()] returns a \link[base]{numeric} \link[base]{vector}.
 #' 
 #' @keywords internal
 #' @importFrom stats coef
@@ -269,7 +269,7 @@ coef.fmx <- function(object, internal = FALSE, ...) {
 #' @param ... additional parameters, currently of no use
 #' 
 #' @returns 
-#' Function [logLik.fmx()] returns a \link[stats]{logLik} object.
+#' The function [logLik.fmx()] returns a \link[stats]{logLik} object.
 #' 
 #' @keywords internal
 #' @importFrom stats logLik
@@ -289,11 +289,11 @@ logLik.fmx <- function(object, ...) object@logLik
 #' @param ... additional parameters, currently of no use
 #' 
 #' @details 
-#' Function [nobs.fmx()] finds the sample size of `@data` slot of
+#' The function [nobs.fmx()] finds the sample size of `@data` slot of
 #' an \linkS4class{fmx} object.
 #' 
 #' @returns 
-#' Function [nobs.fmx()] returns an \link[base]{integer} scalar.
+#' The function [nobs.fmx()] returns an \link[base]{integer} scalar.
 #' 
 #' @keywords internal
 #' @importFrom stats nobs

@@ -15,23 +15,23 @@ fmx_constraint(
 \item{dist}{(optional) \linkS4class{fmx} object}
 
 \item{distname}{\link[base]{character} scalar, name of distribution (see \linkS4class{fmx}),
-default value determined by \code{dist}}
+default value determined by `dist`}
 
 \item{K}{\link[base]{integer} scalar, number of components,
-default value determined by \code{dist}}
+default value determined by `dist`}
 
-\item{pars}{\link[base]{double} \link[base]{matrix},
+\item{pars}{\link[base]{double} \link[base]{matrix}, 
 distribution parameters of a finite mixture distribution (see \linkS4class{fmx}),
-default value determined by \code{dist}}
+default value determined by `dist`}
 }
 \value{
-Function \code{\link[=fmx_constraint]{fmx_constraint()}} returns the indices of internal parameters
-(only applicable to Tukey \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained,
-based on the input \linkS4class{fmx} object \code{dist}.
+The function [fmx_constraint()] returns the indices of internal parameters 
+(only applicable to Tukey \eqn{g}-&-\eqn{h} mixture distribution, yet) to be constrained, 
+based on the input \linkS4class{fmx} object `dist`.
 }
 \description{
-Determine the parameter constraint(s) of a finite mixture distribution \linkS4class{fmx},
-either by the value of parameters of such mixture distribution,
+Determine the parameter constraint(s) of a finite mixture distribution \linkS4class{fmx}, 
+either by the value of parameters of such mixture distribution, 
 or by a user-specified string.
 }
 \keyword{internal}

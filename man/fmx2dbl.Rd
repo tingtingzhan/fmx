@@ -16,18 +16,18 @@ fmx2dbl(
 \arguments{
 \item{x}{\linkS4class{fmx} object}
 
-\item{distname}{\link[base]{character} scalar, default \code{x@distname}}
+\item{distname}{\link[base]{character} scalar, default `x@distname`}
 
-\item{pars}{\link[base]{numeric} \link[base]{matrix}, default \code{x@pars}}
+\item{pars}{\link[base]{numeric} \link[base]{matrix}, default `x@pars`}
 
-\item{K}{\link[base]{integer} scalar, default value from \code{x}}
+\item{K}{\link[base]{integer} scalar, default value from `x`}
 
-\item{w}{\link[base]{numeric} \link[base]{vector}, default \code{x@w}}
+\item{w}{\link[base]{numeric} \link[base]{vector}, default `x@w`}
 
 \item{...}{additional parameters, not currently used}
 }
 \value{
-Function \code{\link[=fmx2dbl]{fmx2dbl()}} returns a \link[base]{numeric} \link[base]{vector}.
+The function [fmx2dbl()] returns a \link[base]{numeric} \link[base]{vector}.
 }
 \description{
 To convert the parameters of \linkS4class{fmx} object into unrestricted parameters.
@@ -42,10 +42,10 @@ For the first parameter
 
 For mixing proportions to multinomial logits.
 
-For \code{'norm'}: \code{sd -> log(sd)}
-for \code{'GH'}: \verb{B -> log(B), h -> log(h)}
+For `'norm'`: `sd -> log(sd)`
+for `'GH'`: `B -> log(B), h -> log(h)`
 }
 \seealso{
-\code{\link[=dbl2fmx]{dbl2fmx()}}
+[dbl2fmx()]
 }
 \keyword{internal}

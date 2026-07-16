@@ -10,7 +10,7 @@
 \item{object}{an \linkS4class{fmx} object}
 }
 \value{
-The \link[methods]{show} method for \linkS4class{fmx} object
+The \link[methods]{show} method for \linkS4class{fmx} object 
 does not have a returned value.
 }
 \description{

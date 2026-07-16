@@ -16,21 +16,21 @@ pmlogis(q)
 \item{q}{\link[base]{double} \link[base]{vector}, multinomial logits}
 }
 \value{
-Function \code{\link[=pmlogis]{pmlogis()}} returns a \link[base]{double} \link[base]{vector} of multinomial probabilities \eqn{p}.
+The function [pmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial probabilities \eqn{p}.
 
-Function \code{\link[=qmlogis]{qmlogis()}} returns a \link[base]{double} \link[base]{vector} of multinomial logits \eqn{q}.
+The function [qmlogis()] returns a \link[base]{double} \link[base]{vector} of multinomial logits \eqn{q}.
 }
 \description{
 Transformation between the \link[base]{vector}s of multinomial probabilities and logits.
 }
 \details{
-Function \code{\link[=pmlogis]{pmlogis()}} takes a length \eqn{k-1} \link[base]{double} \link[base]{vector} of
-multinomial logits \eqn{q} and convert them into length \eqn{k} multinomial probabilities \eqn{p},
-regarding the \emph{first} category as reference.
+The function [pmlogis()] takes a length \eqn{k-1} \link[base]{double} \link[base]{vector} of 
+multinomial logits \eqn{q} and convert them into length \eqn{k} multinomial probabilities \eqn{p}, 
+regarding the *first* category as reference.
 
-Function \code{\link[=qmlogis]{qmlogis()}} takes a length \eqn{k} \link[base]{double} \link[base]{vector} of
-multinomial probabilities \eqn{p} and convert them into length \eqn{k-1} multinomial logits \eqn{q},
-regarding the \emph{first} category as reference.
+The function [qmlogis()] takes a length \eqn{k} \link[base]{double} \link[base]{vector} of 
+multinomial probabilities \eqn{p} and convert them into length \eqn{k-1} multinomial logits \eqn{q}, 
+regarding the *first* category as reference.
 }
 \note{
 This transformation is a generalization of functions \link[stats]{plogis} (i.e., logit to probability)
