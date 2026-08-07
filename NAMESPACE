@@ -41,32 +41,40 @@ import(methods)
 import(stats)
 importClassesFrom(param2moment,moment)
 importFrom(LaplacesDemon,KLD)
-importFrom(TukeyGH77,dGH)
-importFrom(TukeyGH77,gh2z)
-importFrom(TukeyGH77,pGH)
-importFrom(TukeyGH77,qGH)
-importFrom(TukeyGH77,rGH)
+importFrom(TukeyGH77,
+  dGH,
+  gh2z,
+  pGH,
+  qGH,
+  rGH
+)
 importFrom(goftest,cvm.test)
-importFrom(param2moment,moment2param)
-importFrom(param2moment,moment_GH)
-importFrom(param2moment,moment_norm)
-importFrom(param2moment,moment_sn)
-importFrom(param2moment,moment_st)
+importFrom(param2moment,
+  moment2param,
+  moment_GH,
+  moment_norm,
+  moment_sn,
+  moment_st
+)
 importFrom(rstpm2,vuniroot)
-importFrom(sn,dsn)
-importFrom(sn,dst)
-importFrom(sn,psn)
-importFrom(sn,pst)
-importFrom(sn,qsn)
-importFrom(sn,qst)
-importFrom(sn,rsn)
-importFrom(sn,rst)
-importFrom(stats,approxfun)
-importFrom(stats,coef)
-importFrom(stats,confint)
-importFrom(stats,density.default)
-importFrom(stats,ks.test)
-importFrom(stats,logLik)
-importFrom(stats,nobs)
-importFrom(stats,qnorm)
-importFrom(stats,vcov)
+importFrom(sn,
+  dsn,
+  dst,
+  psn,
+  pst,
+  qsn,
+  qst,
+  rsn,
+  rst
+)
+importFrom(stats,
+  approxfun,
+  coef,
+  confint,
+  density.default,
+  ks.test,
+  logLik,
+  nobs,
+  qnorm,
+  vcov
+)
